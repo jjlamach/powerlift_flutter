@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:power_lift/screens/login/widgets/email_field_form_view.dart';
+import 'package:power_lift/screens/login/widgets/password_form_field_view.dart';
+import 'package:power_lift/utils/dimen.dart';
+import 'package:power_lift/utils/strings.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -32,138 +36,68 @@ class _LoginPageState extends State<LoginPage> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: Scaffold(
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.white,
-                Colors.deepPurple.shade50,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.sports_gymnastics, size: 100),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 40.0, bottom: 20.0),
-                    child: TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      controller: _email,
-                      autofocus: true,
-                      decoration: InputDecoration(
-                        hintText: "Email",
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: BorderSide(
-                            width: 2.0,
-                            color:
-                                Theme.of(context).colorScheme.primaryContainer,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: BorderSide(
-                            width: 2.0,
-                            color:
-                                Theme.of(context).colorScheme.primaryContainer,
-                          ),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: const BorderSide(
-                            width: 2.0,
-                            color: Colors.redAccent,
-                          ),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: const BorderSide(
-                            width: 2.0,
-                            color: Colors.redAccent,
-                          ),
-                        ),
-                      ),
-                      validator: (value) {
-                        if ((value?.isEmpty == true) || value == null) {
-                          return "Email field required.";
-                        }
-                        return null;
-                      },
+        appBar: AppBar(
+          leading: const SizedBox.shrink(),
+          title: const Text(Strings.appName),
+        ),
+        body: Form(
+          key: _formKey,
+          child: SafeArea(
+            child: SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
+              padding: const EdgeInsets.all(20.0),
+              child: Center(
+                child: Column(
+                  children: [
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+                    Icon(
+                      Icons.sports_gymnastics,
+                      size: 100,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0),
-                    child: TextFormField(
-                      obscureText: true,
-                      controller: _password,
-                      autofocus: true,
-                      validator: (value) {
-                        // TODO: validate properly
-                        if ((value?.isEmpty == true) || value == null) {
-                          return "Password field required.";
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        hintText: "Password",
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: BorderSide(
-                            width: 2.0,
-                            color:
-                                Theme.of(context).colorScheme.primaryContainer,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: BorderSide(
-                            width: 2.0,
-                            color:
-                                Theme.of(context).colorScheme.primaryContainer,
-                          ),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: const BorderSide(
-                            width: 2.0,
-                            color: Colors.redAccent,
-                          ),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: const BorderSide(
-                            width: 2.0,
-                            color: Colors.redAccent,
-                          ),
+                    const SizedBox(height: 40.0),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text.rich(
+                        TextSpan(
+                          text: Strings.dontHaveAnAccountYet,
+                          style: Theme.of(context).textTheme.bodySmall,
+                          children: [
+                            TextSpan(
+                              text: Strings.register,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                            )
+                          ],
                         ),
                       ),
                     ),
-                  ),
-                  OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                    EmailFieldFormView(email: _email),
+                    PasswordFormFieldView(password: _password),
+                    Dimen.isBigScreen(context)
+                        ? SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.1,
+                          )
+                        : const SizedBox.shrink(),
+                    TextButton(
+                      style: Theme.of(context).textButtonTheme.style,
+                      onPressed: () {
+                        final isValid = _formKey.currentState?.validate();
+                      },
+                      child: Text(
+                        Strings.signIn,
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                              fontSize: 20.0,
+                              color: Colors.white,
+                            ),
+                      ),
                     ),
-                    onPressed: () {
-                      final isValid = _formKey.currentState?.validate();
-                    },
-                    child: Text(
-                      "Log in",
-                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                            fontSize: 20.0,
-                            color: Colors.white,
-                          ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
