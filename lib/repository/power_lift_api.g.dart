@@ -25,7 +25,8 @@ class _PowerLiftApi implements PowerLiftApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = newUser;
+    final _data = <String, dynamic>{};
+    _data.addAll(newUser.toJson());
     final _result = await _dio.fetch<int>(_setStreamType<int>(Options(
       method: 'POST',
       headers: _headers,
@@ -47,11 +48,12 @@ class _PowerLiftApi implements PowerLiftApi {
   }
 
   @override
-  Future<UserResponse> login() async {
+  Future<UserResponse> login(LoginDto loginDto) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    final _data = <String, dynamic>{};
+    _data.addAll(loginDto.toJson());
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<UserResponse>(Options(
       method: 'POST',
@@ -60,7 +62,7 @@ class _PowerLiftApi implements PowerLiftApi {
     )
             .compose(
               _dio.options,
-              '/login',
+              '/users/login/',
               queryParameters: queryParameters,
               data: _data,
             )

@@ -1,4 +1,3 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:power_lift/utils/strings.dart';
 
@@ -29,8 +28,6 @@ class EmailFieldFormView extends StatelessWidget {
         validator: (value) {
           if ((value?.isEmpty == true) || value == null) {
             return Strings.emailFieldRequired;
-          } else if (!EmailValidator.validate(value)) {
-            return Strings.notAvalidEmail;
           }
           return null;
         },

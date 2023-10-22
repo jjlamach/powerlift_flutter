@@ -1,16 +1,19 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:power_lift/models/user/user.dart';
 
-part 'user_response.freezed.dart';
 part 'user_response.g.dart';
 
-@freezed
-class UserResponse with _$UserResponse {
-  const factory UserResponse({
-    required String access_token,
-    required User user,
-  }) = _UserResponse;
+@JsonSerializable()
+class UserResponse {
+  final String access_token;
+  final User user;
+  UserResponse({
+    required this.access_token,
+    required this.user,
+  });
 
   factory UserResponse.fromJson(Map<String, dynamic> json) =>
       _$UserResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserResponseToJson(this);
 }

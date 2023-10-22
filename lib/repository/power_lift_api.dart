@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:power_lift/models/createUser/create_user.dart';
+import 'package:power_lift/models/login_dto.dart';
 import 'package:power_lift/models/userResponse/user_response.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -12,6 +13,6 @@ abstract class PowerLiftApi {
   @POST('/users')
   Future<int> createUser(@Body() CreateUser newUser);
 
-  @POST('/login')
-  Future<UserResponse> login();
+  @POST('/users/login/')
+  Future<UserResponse> login(@Body() LoginDto loginDto);
 }
