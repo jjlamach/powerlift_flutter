@@ -13,7 +13,7 @@ class _PowerLiftApi implements PowerLiftApi {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://localhost:8080/';
+    baseUrl ??= 'http://54.242.228.5:8080/';
   }
 
   final Dio _dio;
@@ -62,7 +62,7 @@ class _PowerLiftApi implements PowerLiftApi {
     )
             .compose(
               _dio.options,
-              '/users/login/',
+              '/users/login',
               queryParameters: queryParameters,
               data: _data,
             )

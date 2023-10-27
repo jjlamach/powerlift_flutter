@@ -1,11 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:power_lift/repository/power_lift_api.dart';
 import 'package:power_lift/repository/power_lift_api_impl.dart';
+import 'package:power_lift/screens/home/home_page.dart';
 import 'package:power_lift/screens/login/login_page.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
 import 'package:power_lift/screens/splashscreen/splashscreen_page.dart';
@@ -20,6 +22,14 @@ final kLogger = Logger(
 
 // Navigation
 final _goRouter = GoRouter(
+  redirect: (context, state) {
+    final authState = context.read<AuthBloc>().state;
+    return authState.whenOrNull(
+      loggedIn: (uid) => "/home",
+      loggedOut: () => "/login",
+      registered: () => "/home",
+    );
+  },
   routes: [
     GoRoute(
       path: '/',
@@ -28,6 +38,10 @@ final _goRouter = GoRouter(
         GoRoute(
           path: 'login',
           builder: (context, state) => const LoginPage(),
+        ),
+        GoRoute(
+          path: 'home',
+          builder: (context, state) => const HomePage(),
         )
       ],
     )
@@ -36,6 +50,13 @@ final _goRouter = GoRouter(
 
 // Service locator
 final getIt = GetIt.instance;
+
+// Local Storage
+const storage = FlutterSecureStorage(
+  aOptions: AndroidOptions(
+    encryptedSharedPreferences: true,
+  ),
+);
 
 void _setUpDependencies() {
   // Register Dio
@@ -81,7 +102,12 @@ class PowerLiftApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => getIt<AuthBloc>()),
+        BlocProvider(
+          create: (context) => getIt<AuthBloc>()
+            ..add(
+              const AuthEvent.startApp(),
+            ),
+        ),
       ],
       child: MaterialApp.router(
         routerConfig: _goRouter,
@@ -112,7 +138,7 @@ class PowerLiftApp extends StatelessWidget {
           ),
           textButtonTheme: TextButtonThemeData(
             style: ButtonStyle(
-              backgroundColor: const MaterialStatePropertyAll(
+              backgroundColor: MaterialStatePropertyAll(
                 Color(0xff4D4C7D),
               ),
               padding: const MaterialStatePropertyAll(

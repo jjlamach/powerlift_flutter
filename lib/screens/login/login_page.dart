@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:power_lift/main.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
 import 'package:power_lift/screens/login/widgets/email_field_form_view.dart';
 import 'package:power_lift/screens/login/widgets/password_form_field_view.dart';
 import 'package:power_lift/utils/dimen.dart';
+import 'package:power_lift/utils/routes.dart';
 import 'package:power_lift/utils/strings.dart';
 
 class LoginPage extends StatefulWidget {
@@ -35,19 +38,16 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-      child: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
-          state.whenOrNull(
-            loggedIn: (uid) {
-              print('Logged in!: $uid');
-            },
-            error: (error) {
-              print('Error: $error');
-            },
-          );
-        },
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        state.whenOrNull(
+          loggedIn: (uid) {
+            context.replace(Routes.home);
+          },
+        );
+      },
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: Scaffold(
           appBar: AppBar(
             leading: const SizedBox.shrink(),

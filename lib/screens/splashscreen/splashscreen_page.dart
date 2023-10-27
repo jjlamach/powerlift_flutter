@@ -15,9 +15,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 2)).then(
-      (value) => {
-        context.replace(Routes.login),
-      },
+      (value) => context.replace(Routes.login),
     );
   }
 

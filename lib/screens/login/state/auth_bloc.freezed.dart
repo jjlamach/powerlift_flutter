@@ -684,7 +684,8 @@ mixin _$AuthState {
     required TResult Function(int uid) loggedIn,
     required TResult Function() registered,
     required TResult Function() loading,
-    required TResult Function(Exception error) error,
+    required TResult Function(String error) error,
+    required TResult Function() loggedOut,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -693,7 +694,8 @@ mixin _$AuthState {
     TResult? Function(int uid)? loggedIn,
     TResult? Function()? registered,
     TResult? Function()? loading,
-    TResult? Function(Exception error)? error,
+    TResult? Function(String error)? error,
+    TResult? Function()? loggedOut,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -702,7 +704,8 @@ mixin _$AuthState {
     TResult Function(int uid)? loggedIn,
     TResult Function()? registered,
     TResult Function()? loading,
-    TResult Function(Exception error)? error,
+    TResult Function(String error)? error,
+    TResult Function()? loggedOut,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -713,6 +716,7 @@ mixin _$AuthState {
     required TResult Function(_Registered value) registered,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
+    required TResult Function(_LoggedOut value) loggedOut,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -722,6 +726,7 @@ mixin _$AuthState {
     TResult? Function(_Registered value)? registered,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
+    TResult? Function(_LoggedOut value)? loggedOut,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -731,6 +736,7 @@ mixin _$AuthState {
     TResult Function(_Registered value)? registered,
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
+    TResult Function(_LoggedOut value)? loggedOut,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -795,7 +801,8 @@ class _$AppStartedImpl implements _AppStarted {
     required TResult Function(int uid) loggedIn,
     required TResult Function() registered,
     required TResult Function() loading,
-    required TResult Function(Exception error) error,
+    required TResult Function(String error) error,
+    required TResult Function() loggedOut,
   }) {
     return appStarted();
   }
@@ -807,7 +814,8 @@ class _$AppStartedImpl implements _AppStarted {
     TResult? Function(int uid)? loggedIn,
     TResult? Function()? registered,
     TResult? Function()? loading,
-    TResult? Function(Exception error)? error,
+    TResult? Function(String error)? error,
+    TResult? Function()? loggedOut,
   }) {
     return appStarted?.call();
   }
@@ -819,7 +827,8 @@ class _$AppStartedImpl implements _AppStarted {
     TResult Function(int uid)? loggedIn,
     TResult Function()? registered,
     TResult Function()? loading,
-    TResult Function(Exception error)? error,
+    TResult Function(String error)? error,
+    TResult Function()? loggedOut,
     required TResult orElse(),
   }) {
     if (appStarted != null) {
@@ -836,6 +845,7 @@ class _$AppStartedImpl implements _AppStarted {
     required TResult Function(_Registered value) registered,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
+    required TResult Function(_LoggedOut value) loggedOut,
   }) {
     return appStarted(this);
   }
@@ -848,6 +858,7 @@ class _$AppStartedImpl implements _AppStarted {
     TResult? Function(_Registered value)? registered,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
+    TResult? Function(_LoggedOut value)? loggedOut,
   }) {
     return appStarted?.call(this);
   }
@@ -860,6 +871,7 @@ class _$AppStartedImpl implements _AppStarted {
     TResult Function(_Registered value)? registered,
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
+    TResult Function(_LoggedOut value)? loggedOut,
     required TResult orElse(),
   }) {
     if (appStarted != null) {
@@ -941,7 +953,8 @@ class _$LoggedInImpl implements _LoggedIn {
     required TResult Function(int uid) loggedIn,
     required TResult Function() registered,
     required TResult Function() loading,
-    required TResult Function(Exception error) error,
+    required TResult Function(String error) error,
+    required TResult Function() loggedOut,
   }) {
     return loggedIn(uid);
   }
@@ -953,7 +966,8 @@ class _$LoggedInImpl implements _LoggedIn {
     TResult? Function(int uid)? loggedIn,
     TResult? Function()? registered,
     TResult? Function()? loading,
-    TResult? Function(Exception error)? error,
+    TResult? Function(String error)? error,
+    TResult? Function()? loggedOut,
   }) {
     return loggedIn?.call(uid);
   }
@@ -965,7 +979,8 @@ class _$LoggedInImpl implements _LoggedIn {
     TResult Function(int uid)? loggedIn,
     TResult Function()? registered,
     TResult Function()? loading,
-    TResult Function(Exception error)? error,
+    TResult Function(String error)? error,
+    TResult Function()? loggedOut,
     required TResult orElse(),
   }) {
     if (loggedIn != null) {
@@ -982,6 +997,7 @@ class _$LoggedInImpl implements _LoggedIn {
     required TResult Function(_Registered value) registered,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
+    required TResult Function(_LoggedOut value) loggedOut,
   }) {
     return loggedIn(this);
   }
@@ -994,6 +1010,7 @@ class _$LoggedInImpl implements _LoggedIn {
     TResult? Function(_Registered value)? registered,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
+    TResult? Function(_LoggedOut value)? loggedOut,
   }) {
     return loggedIn?.call(this);
   }
@@ -1006,6 +1023,7 @@ class _$LoggedInImpl implements _LoggedIn {
     TResult Function(_Registered value)? registered,
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
+    TResult Function(_LoggedOut value)? loggedOut,
     required TResult orElse(),
   }) {
     if (loggedIn != null) {
@@ -1066,7 +1084,8 @@ class _$RegisteredImpl implements _Registered {
     required TResult Function(int uid) loggedIn,
     required TResult Function() registered,
     required TResult Function() loading,
-    required TResult Function(Exception error) error,
+    required TResult Function(String error) error,
+    required TResult Function() loggedOut,
   }) {
     return registered();
   }
@@ -1078,7 +1097,8 @@ class _$RegisteredImpl implements _Registered {
     TResult? Function(int uid)? loggedIn,
     TResult? Function()? registered,
     TResult? Function()? loading,
-    TResult? Function(Exception error)? error,
+    TResult? Function(String error)? error,
+    TResult? Function()? loggedOut,
   }) {
     return registered?.call();
   }
@@ -1090,7 +1110,8 @@ class _$RegisteredImpl implements _Registered {
     TResult Function(int uid)? loggedIn,
     TResult Function()? registered,
     TResult Function()? loading,
-    TResult Function(Exception error)? error,
+    TResult Function(String error)? error,
+    TResult Function()? loggedOut,
     required TResult orElse(),
   }) {
     if (registered != null) {
@@ -1107,6 +1128,7 @@ class _$RegisteredImpl implements _Registered {
     required TResult Function(_Registered value) registered,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
+    required TResult Function(_LoggedOut value) loggedOut,
   }) {
     return registered(this);
   }
@@ -1119,6 +1141,7 @@ class _$RegisteredImpl implements _Registered {
     TResult? Function(_Registered value)? registered,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
+    TResult? Function(_LoggedOut value)? loggedOut,
   }) {
     return registered?.call(this);
   }
@@ -1131,6 +1154,7 @@ class _$RegisteredImpl implements _Registered {
     TResult Function(_Registered value)? registered,
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
+    TResult Function(_LoggedOut value)? loggedOut,
     required TResult orElse(),
   }) {
     if (registered != null) {
@@ -1186,7 +1210,8 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(int uid) loggedIn,
     required TResult Function() registered,
     required TResult Function() loading,
-    required TResult Function(Exception error) error,
+    required TResult Function(String error) error,
+    required TResult Function() loggedOut,
   }) {
     return loading();
   }
@@ -1198,7 +1223,8 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(int uid)? loggedIn,
     TResult? Function()? registered,
     TResult? Function()? loading,
-    TResult? Function(Exception error)? error,
+    TResult? Function(String error)? error,
+    TResult? Function()? loggedOut,
   }) {
     return loading?.call();
   }
@@ -1210,7 +1236,8 @@ class _$LoadingImpl implements _Loading {
     TResult Function(int uid)? loggedIn,
     TResult Function()? registered,
     TResult Function()? loading,
-    TResult Function(Exception error)? error,
+    TResult Function(String error)? error,
+    TResult Function()? loggedOut,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -1227,6 +1254,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_Registered value) registered,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
+    required TResult Function(_LoggedOut value) loggedOut,
   }) {
     return loading(this);
   }
@@ -1239,6 +1267,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_Registered value)? registered,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
+    TResult? Function(_LoggedOut value)? loggedOut,
   }) {
     return loading?.call(this);
   }
@@ -1251,6 +1280,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_Registered value)? registered,
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
+    TResult Function(_LoggedOut value)? loggedOut,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -1270,7 +1300,7 @@ abstract class _$$ErrorImplCopyWith<$Res> {
           _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
       __$$ErrorImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Exception error});
+  $Res call({String error});
 }
 
 /// @nodoc
@@ -1290,7 +1320,7 @@ class __$$ErrorImplCopyWithImpl<$Res>
       null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
-              as Exception,
+              as String,
     ));
   }
 }
@@ -1301,7 +1331,7 @@ class _$ErrorImpl implements _Error {
   const _$ErrorImpl(this.error);
 
   @override
-  final Exception error;
+  final String error;
 
   @override
   String toString() {
@@ -1332,7 +1362,8 @@ class _$ErrorImpl implements _Error {
     required TResult Function(int uid) loggedIn,
     required TResult Function() registered,
     required TResult Function() loading,
-    required TResult Function(Exception error) error,
+    required TResult Function(String error) error,
+    required TResult Function() loggedOut,
   }) {
     return error(this.error);
   }
@@ -1344,7 +1375,8 @@ class _$ErrorImpl implements _Error {
     TResult? Function(int uid)? loggedIn,
     TResult? Function()? registered,
     TResult? Function()? loading,
-    TResult? Function(Exception error)? error,
+    TResult? Function(String error)? error,
+    TResult? Function()? loggedOut,
   }) {
     return error?.call(this.error);
   }
@@ -1356,7 +1388,8 @@ class _$ErrorImpl implements _Error {
     TResult Function(int uid)? loggedIn,
     TResult Function()? registered,
     TResult Function()? loading,
-    TResult Function(Exception error)? error,
+    TResult Function(String error)? error,
+    TResult Function()? loggedOut,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1373,6 +1406,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function(_Registered value) registered,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
+    required TResult Function(_LoggedOut value) loggedOut,
   }) {
     return error(this);
   }
@@ -1385,6 +1419,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function(_Registered value)? registered,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Error value)? error,
+    TResult? Function(_LoggedOut value)? loggedOut,
   }) {
     return error?.call(this);
   }
@@ -1397,6 +1432,7 @@ class _$ErrorImpl implements _Error {
     TResult Function(_Registered value)? registered,
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
+    TResult Function(_LoggedOut value)? loggedOut,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1407,10 +1443,136 @@ class _$ErrorImpl implements _Error {
 }
 
 abstract class _Error implements AuthState {
-  const factory _Error(final Exception error) = _$ErrorImpl;
+  const factory _Error(final String error) = _$ErrorImpl;
 
-  Exception get error;
+  String get error;
   @JsonKey(ignore: true)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$LoggedOutImplCopyWith<$Res> {
+  factory _$$LoggedOutImplCopyWith(
+          _$LoggedOutImpl value, $Res Function(_$LoggedOutImpl) then) =
+      __$$LoggedOutImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LoggedOutImplCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$LoggedOutImpl>
+    implements _$$LoggedOutImplCopyWith<$Res> {
+  __$$LoggedOutImplCopyWithImpl(
+      _$LoggedOutImpl _value, $Res Function(_$LoggedOutImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$LoggedOutImpl implements _LoggedOut {
+  const _$LoggedOutImpl();
+
+  @override
+  String toString() {
+    return 'AuthState.loggedOut()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LoggedOutImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() appStarted,
+    required TResult Function(int uid) loggedIn,
+    required TResult Function() registered,
+    required TResult Function() loading,
+    required TResult Function(String error) error,
+    required TResult Function() loggedOut,
+  }) {
+    return loggedOut();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? appStarted,
+    TResult? Function(int uid)? loggedIn,
+    TResult? Function()? registered,
+    TResult? Function()? loading,
+    TResult? Function(String error)? error,
+    TResult? Function()? loggedOut,
+  }) {
+    return loggedOut?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? appStarted,
+    TResult Function(int uid)? loggedIn,
+    TResult Function()? registered,
+    TResult Function()? loading,
+    TResult Function(String error)? error,
+    TResult Function()? loggedOut,
+    required TResult orElse(),
+  }) {
+    if (loggedOut != null) {
+      return loggedOut();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_AppStarted value) appStarted,
+    required TResult Function(_LoggedIn value) loggedIn,
+    required TResult Function(_Registered value) registered,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Error value) error,
+    required TResult Function(_LoggedOut value) loggedOut,
+  }) {
+    return loggedOut(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_AppStarted value)? appStarted,
+    TResult? Function(_LoggedIn value)? loggedIn,
+    TResult? Function(_Registered value)? registered,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_LoggedOut value)? loggedOut,
+  }) {
+    return loggedOut?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_AppStarted value)? appStarted,
+    TResult Function(_LoggedIn value)? loggedIn,
+    TResult Function(_Registered value)? registered,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_LoggedOut value)? loggedOut,
+    required TResult orElse(),
+  }) {
+    if (loggedOut != null) {
+      return loggedOut(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LoggedOut implements AuthState {
+  const factory _LoggedOut() = _$LoggedOutImpl;
 }
