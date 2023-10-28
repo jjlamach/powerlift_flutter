@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:power_lift/models/user/user.dart';
+import 'package:power_lift/models/userDto/user.dart';
 
 part 'user_response.g.dart';
 

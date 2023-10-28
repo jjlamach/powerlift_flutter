@@ -10,6 +10,7 @@ import 'package:power_lift/repository/power_lift_api_impl.dart';
 import 'package:power_lift/screens/home/home_page.dart';
 import 'package:power_lift/screens/login/login_page.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
+import 'package:power_lift/screens/register/register_page.dart';
 import 'package:power_lift/screens/splashscreen/splashscreen_page.dart';
 
 // logger
@@ -26,25 +27,26 @@ final _goRouter = GoRouter(
     final authState = context.read<AuthBloc>().state;
     return authState.whenOrNull(
       loggedIn: (uid) => "/home",
-      loggedOut: () => "/login",
-      registered: () => "/home",
+      registered: (_) => "/home",
     );
   },
   routes: [
     GoRoute(
       path: '/',
       builder: (context, state) => const SplashScreenPage(),
-      routes: [
-        GoRoute(
-          path: 'login',
-          builder: (context, state) => const LoginPage(),
-        ),
-        GoRoute(
-          path: 'home',
-          builder: (context, state) => const HomePage(),
-        )
-      ],
-    )
+    ),
+    GoRoute(
+      path: '/home',
+      builder: (context, state) => const HomePage(),
+    ),
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => const LoginPage(),
+    ),
+    GoRoute(
+      path: '/register',
+      builder: (context, state) => const RegisterPage(),
+    ),
   ],
 );
 
@@ -136,9 +138,23 @@ class PowerLiftApp extends StatelessWidget {
               fontSize: 15,
             ),
           ),
+          outlinedButtonTheme: OutlinedButtonThemeData(
+            style: ButtonStyle(
+              textStyle: const MaterialStatePropertyAll(
+                TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              foregroundColor: const MaterialStatePropertyAll(Colors.white),
+              backgroundColor: MaterialStatePropertyAll(
+                const Color(0xffF99417).withOpacity(0.7),
+              ),
+            ),
+          ),
           textButtonTheme: TextButtonThemeData(
             style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(
+              backgroundColor: const MaterialStatePropertyAll(
                 Color(0xff4D4C7D),
               ),
               padding: const MaterialStatePropertyAll(
@@ -149,9 +165,14 @@ class PowerLiftApp extends StatelessWidget {
                   borderRadius: BorderRadius.circular(40.0),
                 ),
               ),
+              foregroundColor: const MaterialStatePropertyAll(
+                Colors.white,
+              ),
               textStyle: const MaterialStatePropertyAll(
                 TextStyle(
                   color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),
@@ -188,11 +209,18 @@ class PowerLiftApp extends StatelessWidget {
           ),
           appBarTheme: const AppBarTheme(
             backgroundColor: Color(0xff363062),
+            iconTheme: IconThemeData(
+              color: Colors.white,
+            ),
             titleTextStyle: TextStyle(
               color: Colors.white,
               fontSize: 30,
               fontWeight: FontWeight.bold,
             ),
+          ),
+          snackBarTheme: SnackBarThemeData(
+            backgroundColor: const Color(0xffF99417).withOpacity(0.7),
+            actionTextColor: Colors.white,
           ),
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: Color(0xff363062),

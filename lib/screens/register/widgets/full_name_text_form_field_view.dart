@@ -1,23 +1,21 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:power_lift/utils/strings.dart';
 
-class EmailFieldFormView extends StatelessWidget {
-  const EmailFieldFormView({
+class FullNameTextFormFieldView extends StatelessWidget {
+  const FullNameTextFormFieldView({
     super.key,
-    required TextEditingController email,
-  }) : _email = email;
+    required TextEditingController fullName,
+  }) : _fullName = fullName;
 
-  final TextEditingController _email;
+  final TextEditingController _fullName;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      controller: _email,
-      autofocus: true,
+      keyboardType: TextInputType.text,
+      controller: _fullName,
       decoration: InputDecoration(
-        hintText: Strings.email,
+        hintText: Strings.fullName,
         enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
         focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
         errorBorder: Theme.of(context).inputDecorationTheme.errorBorder,
@@ -26,10 +24,7 @@ class EmailFieldFormView extends StatelessWidget {
       ),
       validator: (value) {
         if ((value?.isEmpty == true) || value == null) {
-          return Strings.emailFieldRequired;
-        }
-        if (!EmailValidator.validate(value)) {
-          return Strings.notAvalidEmail;
+          return Strings.fullNameRequired;
         }
         return null;
       },

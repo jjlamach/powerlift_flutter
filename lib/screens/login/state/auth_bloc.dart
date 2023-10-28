@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:power_lift/main.dart';
+import 'package:power_lift/models/createUserDto/create_user.dart';
 import 'package:power_lift/repository/power_lift_api_impl.dart';
+import 'package:power_lift/utils/errors.dart';
 
 part 'auth_bloc.freezed.dart';
 
@@ -20,8 +22,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               } else {
                 emit(const AuthState.loggedOut());
               }
-            } on Exception catch (e) {
-              emit(const AuthState.error("Could not start the app properly."));
+            } on Exception catch (_) {
+              emit(const AuthState.error(Errors.couldNotStartApp));
             }
           },
           logIn: (email, password) async {
@@ -33,10 +35,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               );
               emit(AuthState.loggedIn(response.user.Id));
             } on Exception catch (e) {
-              emit(AuthState.error("Could not sign in the user."));
+              emit(const AuthState.error(Errors.signInError));
+              emit(const AuthState.initial());
             }
           },
-          createUser: (email, password, username, fullName) {},
+          createUser: (email, password, username, fullName) async {
+            try {
+              final result = await api
+                  .createUser(CreateUser(username, password, fullName, email));
+              await storage.write(key: 'Id', value: result.toString());
+              emit(AuthState.registered(result));
+            } on Exception catch (_) {
+              emit(const AuthState.error(Errors.couldNotCreateUser));
+              emit(const AuthState.initial());
+            }
+          },
           logOut: () async {
             await storage.delete(key: 'Id');
             emit(const AuthState.loggedOut());
@@ -66,8 +79,9 @@ class AuthEvent with _$AuthEvent {
 class AuthState with _$AuthState {
   const factory AuthState.appStarted() = _AppStarted;
   const factory AuthState.loggedIn(int uid) = _LoggedIn;
-  const factory AuthState.registered() = _Registered;
+  const factory AuthState.registered(int uid) = _Registered;
   const factory AuthState.loading() = _Loading;
   const factory AuthState.error(String error) = _Error;
   const factory AuthState.loggedOut() = _LoggedOut;
+  const factory AuthState.initial() = _Initial;
 }

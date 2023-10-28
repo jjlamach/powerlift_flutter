@@ -8,4 +8,11 @@ class Strings {
   static const String appName = 'Powerlift';
   static const String dontHaveAnAccountYet = "Don't have an account yet?";
   static const String register = ' Register';
+  static const String username = 'Username';
+  static const String usernameRequired = 'Username required';
+  static const String fullName = 'Full name';
+  static const String confirmPassword = 'Confirm Password';
+  static const String fullNameRequired = 'Full name required';
+  static const String confirmPasswordIsRequired =
+      'Confirm Password is required.';
 }

@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
         body: Center(
           child: Text('${context.read<AuthBloc>().state.whenOrNull(
                 loggedIn: (uid) => uid,
+                registered: (uid) => uid,
               )}'),
         ),
       ),
