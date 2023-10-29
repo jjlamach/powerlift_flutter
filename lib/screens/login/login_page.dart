@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
       listener: (context, state) {
         state.whenOrNull(
           loggedIn: (uid) {
-            context.replace(Routes.home);
+            context.replace(Routes.index);
           },
           error: (error) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -57,10 +57,11 @@ class _LoginPageState extends State<LoginPage> {
       child: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: Scaffold(
-          appBar: AppBar(
-            leading: const SizedBox.shrink(),
-            title: const Text(Strings.appName),
-          ),
+          backgroundColor: Color(0xff596167),
+          // appBar: AppBar(
+          //   leading: const SizedBox.shrink(),
+          //   title: const Text(Strings.appName),
+          // ),
           body: Form(
             key: _formKey,
             child: SafeArea(
@@ -111,7 +112,13 @@ class _LoginPageState extends State<LoginPage> {
                           )
                         : const SizedBox(height: 20.0),
                     TextButton(
-                      style: Theme.of(context).textButtonTheme.style,
+                      style: Theme.of(context).textButtonTheme.style?.copyWith(
+                              backgroundColor: MaterialStatePropertyAll(
+                            Theme.of(context)
+                                .colorScheme
+                                .secondary
+                                .withOpacity(0.5),
+                          )),
                       onPressed: () {
                         final isValid = _formKey.currentState?.validate();
                         if (isValid == true) {

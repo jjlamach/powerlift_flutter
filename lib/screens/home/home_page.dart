@@ -24,20 +24,23 @@ class _HomePageState extends State<HomePage> {
       },
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: false,
+          title: Text('Hello'),
           actions: [
-            OutlinedButton(
-              onPressed: () {
-                context.read<AuthBloc>().add(const AuthEvent.logOut());
+            BlocListener<AuthBloc, AuthState>(
+              listener: (context, state) {
+                state.whenOrNull(
+                  loggedOut: () => context.go("/login"),
+                );
               },
-              child: Text("Log out", style: TextStyle(color: Colors.white)),
+              child: TextButton(
+                onPressed: () {
+                  context.read<AuthBloc>().add(AuthEvent.logOut());
+                },
+                child: Text("Log Out"),
+              ),
             )
           ],
-        ),
-        body: Center(
-          child: Text('${context.read<AuthBloc>().state.whenOrNull(
-                loggedIn: (uid) => uid,
-                registered: (uid) => uid,
-              )}'),
         ),
       ),
     );

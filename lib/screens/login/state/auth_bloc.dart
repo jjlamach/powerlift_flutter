@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:power_lift/main.dart';
 import 'package:power_lift/models/createUserDto/create_user.dart';
+import 'package:power_lift/models/userDto/user.dart';
 import 'package:power_lift/repository/power_lift_api_impl.dart';
 import 'package:power_lift/utils/errors.dart';
 
@@ -9,7 +10,7 @@ part 'auth_bloc.freezed.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final PowerLiftApiImpl api;
-
+  User? user;
   AuthBloc(this.api) : super(const _AppStarted()) {
     on<AuthEvent>(
       (event, emit) async {
@@ -18,7 +19,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             try {
               final id = await storage.read(key: 'Id');
               if (id?.isNotEmpty == true) {
-                emit(AuthState.loggedIn(int.parse(id!)));
+                // emit(AuthState.loggedIn(int.parse(id!)));
+                emit(AuthState.loggedIn(user: user));
               } else {
                 emit(const AuthState.loggedOut());
               }
@@ -33,7 +35,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 key: 'Id',
                 value: response.user.Id.toString(),
               );
-              emit(AuthState.loggedIn(response.user.Id));
+              user = response.user;
+              emit(AuthState.loggedIn(user: response.user));
             } on Exception catch (e) {
               emit(const AuthState.error(Errors.signInError));
               emit(const AuthState.initial());
@@ -78,7 +81,7 @@ class AuthEvent with _$AuthEvent {
 @freezed
 class AuthState with _$AuthState {
   const factory AuthState.appStarted() = _AppStarted;
-  const factory AuthState.loggedIn(int uid) = _LoggedIn;
+  const factory AuthState.loggedIn({User? user}) = _LoggedIn;
   const factory AuthState.registered(int uid) = _Registered;
   const factory AuthState.loading() = _Loading;
   const factory AuthState.error(String error) = _Error;

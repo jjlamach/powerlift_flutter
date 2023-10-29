@@ -13,7 +13,7 @@ class _PowerLiftApi implements PowerLiftApi {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://54.242.228.5:8080/';
+    baseUrl ??= 'http://3.217.215.163:8080/';
   }
 
   final Dio _dio;

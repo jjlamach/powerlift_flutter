@@ -17,6 +17,9 @@ class PasswordFormFieldView extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: true,
+      style: TextStyle(
+        color: Colors.black,
+      ),
       controller: _password,
       validator: (value) {
         if ((value?.isEmpty == true) || value == null) {

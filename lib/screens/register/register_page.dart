@@ -52,7 +52,11 @@ class _RegisterPageState extends State<RegisterPage> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: Scaffold(
-        appBar: AppBar(),
+        backgroundColor: Color(0xff596167),
+        appBar: AppBar(
+          surfaceTintColor: Colors.transparent,
+          backgroundColor: Color(0xff596167),
+        ),
         body: Form(
           key: _formKey,
           child: SafeArea(

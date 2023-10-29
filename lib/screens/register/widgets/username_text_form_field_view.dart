@@ -12,6 +12,10 @@ class UsernameTextFormFieldView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorColor: Theme.of(context).colorScheme.primary,
+      style: TextStyle(
+        color: Colors.black,
+      ),
       keyboardType: TextInputType.text,
       controller: _username,
       decoration: InputDecoration(

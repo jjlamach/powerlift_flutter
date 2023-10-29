@@ -7,10 +7,12 @@ import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:power_lift/repository/power_lift_api.dart';
 import 'package:power_lift/repository/power_lift_api_impl.dart';
+import 'package:power_lift/screens/bottom_navigation_bar.dart';
 import 'package:power_lift/screens/home/home_page.dart';
 import 'package:power_lift/screens/login/login_page.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
 import 'package:power_lift/screens/register/register_page.dart';
+import 'package:power_lift/screens/splashscreen/get_started_page.dart';
 import 'package:power_lift/screens/splashscreen/splashscreen_page.dart';
 
 // logger
@@ -26,8 +28,10 @@ final _goRouter = GoRouter(
   redirect: (context, state) {
     final authState = context.read<AuthBloc>().state;
     return authState.whenOrNull(
-      loggedIn: (uid) => "/home",
-      registered: (_) => "/home",
+      // loggedIn: (uid) => "/home",
+      // registered: (_) => "/home",
+      loggedIn: (uid) => "/index",
+      registered: (uid) => "/index",
     );
   },
   routes: [
@@ -36,8 +40,18 @@ final _goRouter = GoRouter(
       builder: (context, state) => const SplashScreenPage(),
     ),
     GoRoute(
-      path: '/home',
-      builder: (context, state) => const HomePage(),
+      path: '/index',
+      builder: (context, state) => const AppBottomNavigationBar(),
+      routes: [
+        GoRoute(
+          path: 'home',
+          builder: (context, state) => const HomePage(),
+        ),
+      ],
+    ),
+    GoRoute(
+      path: '/get-started',
+      builder: (context, state) => const GetStartedPage(),
     ),
     GoRoute(
       path: '/login',
@@ -116,18 +130,18 @@ class PowerLiftApp extends StatelessWidget {
         title: 'PowerLift',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: const ColorScheme(
+          colorScheme: ColorScheme(
             brightness: Brightness.light,
-            primary: Color(0xff363062),
-            onPrimary: Color(0xffF5F5F5),
-            secondary: Color(0xffF99417),
+            primary: const Color(0xff000000),
+            onPrimary: Colors.white,
+            secondary: const Color(0xffa3ec3f).withOpacity(0.5),
             onSecondary: Colors.black,
             error: Colors.redAccent,
             onError: Colors.white,
-            background: Color(0xffF5F5F5),
+            background: Colors.black,
             onBackground: Colors.black,
-            surface: Color(0xffF5F5F5),
-            onSurface: Color(0xff4D4C7D),
+            surface: const Color(0xff1e2021),
+            onSurface: Colors.white,
           ),
           textTheme: const TextTheme(
             displayLarge: TextStyle(
@@ -142,20 +156,20 @@ class PowerLiftApp extends StatelessWidget {
             style: ButtonStyle(
               textStyle: const MaterialStatePropertyAll(
                 TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              foregroundColor: const MaterialStatePropertyAll(Colors.white),
+              foregroundColor: const MaterialStatePropertyAll(Colors.black),
               backgroundColor: MaterialStatePropertyAll(
-                const Color(0xffF99417).withOpacity(0.7),
+                const Color(0xffa3ec3f).withOpacity(0.5),
               ),
             ),
           ),
           textButtonTheme: TextButtonThemeData(
             style: ButtonStyle(
-              backgroundColor: const MaterialStatePropertyAll(
-                Color(0xff4D4C7D),
+              backgroundColor: MaterialStatePropertyAll(
+                const Color(0xffa3ec3f).withOpacity(0.5),
               ),
               padding: const MaterialStatePropertyAll(
                 EdgeInsets.symmetric(horizontal: 100),
@@ -178,18 +192,23 @@ class PowerLiftApp extends StatelessWidget {
             ),
           ),
           inputDecorationTheme: InputDecorationTheme(
+            filled: true,
+            hintStyle: const TextStyle(
+              color: Colors.black,
+            ),
+            fillColor: Colors.white,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20.0),
-              borderSide: const BorderSide(
+              borderSide: BorderSide(
                 width: 2.0,
-                color: Color(0xff363062),
+                color: const Color(0xffa3ec3f).withOpacity(0.5),
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20.0),
-              borderSide: const BorderSide(
+              borderSide: BorderSide(
                 width: 2.0,
-                color: Color(0xff363062),
+                color: const Color(0xffa3ec3f).withOpacity(0.5),
               ),
             ),
             errorBorder: OutlineInputBorder(
@@ -208,7 +227,7 @@ class PowerLiftApp extends StatelessWidget {
             ),
           ),
           appBarTheme: const AppBarTheme(
-            backgroundColor: Color(0xff363062),
+            backgroundColor: Color(0xff000000),
             iconTheme: IconThemeData(
               color: Colors.white,
             ),
@@ -221,9 +240,6 @@ class PowerLiftApp extends StatelessWidget {
           snackBarTheme: SnackBarThemeData(
             backgroundColor: const Color(0xffF99417).withOpacity(0.7),
             actionTextColor: Colors.white,
-          ),
-          bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-            backgroundColor: Color(0xff363062),
           ),
         ),
       ),

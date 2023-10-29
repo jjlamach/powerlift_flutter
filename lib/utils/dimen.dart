@@ -18,4 +18,6 @@ class Dimen {
       return false;
     }
   }
+
+  static const double iconSize = 30;
 }
