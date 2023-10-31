@@ -904,6 +904,8 @@ abstract class _$$LoggedInImplCopyWith<$Res> {
       __$$LoggedInImplCopyWithImpl<$Res>;
   @useResult
   $Res call({User? user});
+
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -925,6 +927,18 @@ class __$$LoggedInImplCopyWithImpl<$Res>
           : user // ignore: cast_nullable_to_non_nullable
               as User?,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value));
+    });
   }
 }
 

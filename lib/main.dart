@@ -11,6 +11,8 @@ import 'package:power_lift/screens/bottom_navigation_bar.dart';
 import 'package:power_lift/screens/home/home_page.dart';
 import 'package:power_lift/screens/login/login_page.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
+import 'package:power_lift/screens/onboarding/email_onboarding_page.dart';
+import 'package:power_lift/screens/onboarding/state/onboarding_cubit.dart';
 import 'package:power_lift/screens/register/register_page.dart';
 import 'package:power_lift/screens/splashscreen/get_started_page.dart';
 import 'package:power_lift/screens/splashscreen/splashscreen_page.dart';
@@ -61,6 +63,10 @@ final _goRouter = GoRouter(
       path: '/register',
       builder: (context, state) => const RegisterPage(),
     ),
+    GoRoute(
+      path: '/onboarding-email',
+      builder: (context, state) => const EmailOnboardingPage(),
+    )
   ],
 );
 
@@ -97,6 +103,9 @@ void _setUpBlocsAndCubits() {
       getIt.get(),
     ),
   );
+  getIt.registerFactory(
+    () => OnboardingCubit(),
+  );
 }
 
 void _setUp() {
@@ -124,17 +133,20 @@ class PowerLiftApp extends StatelessWidget {
               const AuthEvent.startApp(),
             ),
         ),
+        BlocProvider(
+          create: (context) => getIt<OnboardingCubit>(),
+        )
       ],
       child: MaterialApp.router(
         routerConfig: _goRouter,
         title: 'PowerLift',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme(
+          colorScheme: const ColorScheme(
             brightness: Brightness.light,
             primary: const Color(0xff000000),
             onPrimary: Colors.white,
-            secondary: const Color(0xffa3ec3f).withOpacity(0.5),
+            secondary: const Color(0xffa3ec3f),
             onSecondary: Colors.black,
             error: Colors.redAccent,
             onError: Colors.white,
@@ -142,6 +154,9 @@ class PowerLiftApp extends StatelessWidget {
             onBackground: Colors.black,
             surface: const Color(0xff1e2021),
             onSurface: Colors.white,
+          ),
+          textSelectionTheme: const TextSelectionThemeData(
+            selectionColor: Colors.blueGrey,
           ),
           textTheme: const TextTheme(
             displayLarge: TextStyle(
@@ -152,24 +167,24 @@ class PowerLiftApp extends StatelessWidget {
               fontSize: 15,
             ),
           ),
-          outlinedButtonTheme: OutlinedButtonThemeData(
+          outlinedButtonTheme: const OutlinedButtonThemeData(
             style: ButtonStyle(
-              textStyle: const MaterialStatePropertyAll(
+              textStyle: MaterialStatePropertyAll(
                 TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              foregroundColor: const MaterialStatePropertyAll(Colors.black),
+              foregroundColor: MaterialStatePropertyAll(Colors.black),
               backgroundColor: MaterialStatePropertyAll(
-                const Color(0xffa3ec3f).withOpacity(0.5),
+                Color(0xffa3ec3f),
               ),
             ),
           ),
           textButtonTheme: TextButtonThemeData(
             style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(
-                const Color(0xffa3ec3f).withOpacity(0.5),
+              backgroundColor: const MaterialStatePropertyAll(
+                Color(0xffa3ec3f),
               ),
               padding: const MaterialStatePropertyAll(
                 EdgeInsets.symmetric(horizontal: 100),
@@ -199,16 +214,16 @@ class PowerLiftApp extends StatelessWidget {
             fillColor: Colors.white,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20.0),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 width: 2.0,
-                color: const Color(0xffa3ec3f).withOpacity(0.5),
+                color: Color(0xffa3ec3f),
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20.0),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 width: 2.0,
-                color: const Color(0xffa3ec3f).withOpacity(0.5),
+                color: Color(0xffa3ec3f),
               ),
             ),
             errorBorder: OutlineInputBorder(

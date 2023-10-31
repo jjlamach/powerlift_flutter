@@ -14,5 +14,6 @@ class LoginDto {
   factory LoginDto.fromJson(Map<String, dynamic> json) =>
       _$LoginDtoFromJson(json);
 
+  // Needed for sending it to the requests
   Map<String, dynamic> toJson() => _$LoginDtoToJson(this);
 }

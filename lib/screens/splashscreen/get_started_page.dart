@@ -44,7 +44,8 @@ class GetStartedPage extends StatelessWidget {
                               ),
                             ),
                     onPressed: () {
-                      context.go(Routes.login);
+                      // context.go(Routes.login);
+                      context.go(Routes.onboardingEmail);
                     },
                     child: const Text(
                       "Get Started",

@@ -15,4 +15,6 @@ class Strings {
   static const String fullNameRequired = 'Full name required';
   static const String confirmPasswordIsRequired =
       'Confirm Password is required.';
+
+  static const String whatIsYourEmail = 'What is your email?';
 }

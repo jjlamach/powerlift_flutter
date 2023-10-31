@@ -6,7 +6,7 @@ import 'package:retrofit/retrofit.dart';
 
 part 'power_lift_api.g.dart';
 
-@RestApi(baseUrl: 'http://3.217.215.163:8080/')
+@RestApi(baseUrl: 'https://powerlift.thundersoftapi.com/')
 abstract class PowerLiftApi {
   factory PowerLiftApi(Dio dio, {String baseUrl}) = _PowerLiftApi;
 
