@@ -13,6 +13,7 @@ import 'package:power_lift/screens/login/login_page.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
 import 'package:power_lift/screens/onboarding/confirm_password_onboarding_page.dart';
 import 'package:power_lift/screens/onboarding/email_onboarding_page.dart';
+import 'package:power_lift/screens/onboarding/full_name_onboarding_page.dart';
 import 'package:power_lift/screens/onboarding/password_onboarding_page.dart';
 import 'package:power_lift/screens/onboarding/state/onboarding_cubit.dart';
 import 'package:power_lift/screens/onboarding/username_onboarding_page.dart';
@@ -82,6 +83,10 @@ final _goRouter = GoRouter(
       path: '/onboarding-username',
       builder: (context, state) => const UsernameOnboardingPage(),
     ),
+    GoRoute(
+      path: '/onboarding-fullName',
+      builder: (context, state) => const FullNameOnboardingPage(),
+    )
   ],
 );
 
