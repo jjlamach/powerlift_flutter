@@ -18,4 +18,5 @@ class Strings {
 
   static const String whatIsYourEmail = 'What is your email?';
   static const String whatIsYourPassword = 'What password you want to use?';
+  static const String whatIsYourUsername = 'What username do you want to have?';
 }

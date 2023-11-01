@@ -10,4 +10,5 @@ class Routes {
   static const String onboardingPassword = '/onboarding-password';
   static const String onboardingConfirmPassword =
       '/onboarding-confirm-password';
+  static const String onboardingUsername = '/onboarding-username';
 }
