@@ -7,4 +7,5 @@ class Routes {
 
   // onboarding routes
   static const String onboardingEmail = '/onboarding-email';
+  static const String onboardingPassword = '/onboarding-password';
 }

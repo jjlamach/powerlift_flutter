@@ -1,49 +1,42 @@
 import 'package:bloc/bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:power_lift/main.dart';
+import 'package:power_lift/models/onboardinguser/onboarding_user.dart';
 
-part 'onboarding_cubit.freezed.dart';
+class OnboardingCubit extends Cubit<OnboardingUser?> {
+  OnboardingUser? user;
 
-class OnboardingCubit extends Cubit<OnboardingState> {
-  String? email;
-  String? password;
-  String? confirmPassword;
-  String? username;
-  String? fullName;
-  OnboardingCubit() : super(const _Initial());
+  OnboardingCubit() : super(const OnboardingUser()) {
+    user = const OnboardingUser();
+  }
 
-  void emailText(String txt) {
-    email = txt;
-    emit(OnboardingState.emailField(txt));
+  void emailText(String txt) async {
+    user = user?.copyWith(email: txt);
+    emit(user);
   }
 
   void passwordTxt(String password) {
-    this.password = password;
-    emit(OnboardingState.passwordField(password));
+    user = user?.copyWith(password: password);
+    emit(user);
   }
 
   void confirmPasswordTxt(String txt) {
-    confirmPassword = txt;
-    emit(OnboardingState.confirmPasswordField(txt));
+    user = user?.copyWith(confirmPassword: txt);
+    emit(user);
   }
 
   void userName(String txt) {
-    username = txt;
-    emit(OnboardingState.username(txt));
+    user = user?.copyWith(username: txt);
+    emit(user);
   }
 
   void fullname(String txt) {
-    fullName = txt;
-    emit(OnboardingState.fullName(txt));
+    user = user?.copyWith(fullName: txt);
+    emit(user);
   }
-}
 
-@freezed
-class OnboardingState with _$OnboardingState {
-  const factory OnboardingState.initial() = _Initial;
-  const factory OnboardingState.emailField(String email) = _EmailField;
-  const factory OnboardingState.passwordField(String password) = _PasswordField;
-  const factory OnboardingState.confirmPasswordField(String password) =
-      _ConfirmPasswordField;
-  const factory OnboardingState.username(String username) = _UsernameField;
-  const factory OnboardingState.fullName(String fullName) = _FullNameField;
+  @override
+  void onChange(Change<OnboardingUser?> change) {
+    super.onChange(change);
+    kLogger.i(change);
+  }
 }

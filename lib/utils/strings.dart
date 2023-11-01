@@ -17,4 +17,5 @@ class Strings {
       'Confirm Password is required.';
 
   static const String whatIsYourEmail = 'What is your email?';
+  static const String whatIsYourPassword = 'What password you want to use?';
 }
