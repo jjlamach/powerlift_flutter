@@ -12,7 +12,7 @@ class OnboardingPasswordTextField extends StatelessWidget {
       autofocus: true,
       obscureText: true,
       onChanged: (value) => context.read<OnboardingCubit>().passwordTxt(value),
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: TextInputType.text,
       style: const TextStyle(
         color: Colors.white,
         fontSize: 20,
