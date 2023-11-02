@@ -17,6 +17,7 @@ class EmailOnboardingPage extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: Scaffold(
+        appBar: AppBar(),
         body: Padding(
           padding: const EdgeInsets.all(30.0),
           child: BlocBuilder<OnboardingCubit, OnboardingUser?>(

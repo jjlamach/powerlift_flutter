@@ -681,7 +681,7 @@ mixin _$AuthState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() appStarted,
-    required TResult Function(User? user) loggedIn,
+    required TResult Function(int? userId, String? username) loggedIn,
     required TResult Function(int uid) registered,
     required TResult Function() loading,
     required TResult Function(String error) error,
@@ -692,7 +692,7 @@ mixin _$AuthState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? appStarted,
-    TResult? Function(User? user)? loggedIn,
+    TResult? Function(int? userId, String? username)? loggedIn,
     TResult? Function(int uid)? registered,
     TResult? Function()? loading,
     TResult? Function(String error)? error,
@@ -703,7 +703,7 @@ mixin _$AuthState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? appStarted,
-    TResult Function(User? user)? loggedIn,
+    TResult Function(int? userId, String? username)? loggedIn,
     TResult Function(int uid)? registered,
     TResult Function()? loading,
     TResult Function(String error)? error,
@@ -804,7 +804,7 @@ class _$AppStartedImpl implements _AppStarted {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() appStarted,
-    required TResult Function(User? user) loggedIn,
+    required TResult Function(int? userId, String? username) loggedIn,
     required TResult Function(int uid) registered,
     required TResult Function() loading,
     required TResult Function(String error) error,
@@ -818,7 +818,7 @@ class _$AppStartedImpl implements _AppStarted {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? appStarted,
-    TResult? Function(User? user)? loggedIn,
+    TResult? Function(int? userId, String? username)? loggedIn,
     TResult? Function(int uid)? registered,
     TResult? Function()? loading,
     TResult? Function(String error)? error,
@@ -832,7 +832,7 @@ class _$AppStartedImpl implements _AppStarted {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? appStarted,
-    TResult Function(User? user)? loggedIn,
+    TResult Function(int? userId, String? username)? loggedIn,
     TResult Function(int uid)? registered,
     TResult Function()? loading,
     TResult Function(String error)? error,
@@ -903,9 +903,7 @@ abstract class _$$LoggedInImplCopyWith<$Res> {
           _$LoggedInImpl value, $Res Function(_$LoggedInImpl) then) =
       __$$LoggedInImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({User? user});
-
-  $UserCopyWith<$Res>? get user;
+  $Res call({int? userId, String? username});
 }
 
 /// @nodoc
@@ -919,40 +917,35 @@ class __$$LoggedInImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = freezed,
+    Object? userId = freezed,
+    Object? username = freezed,
   }) {
     return _then(_$LoggedInImpl(
-      user: freezed == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      username: freezed == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res>? get user {
-    if (_value.user == null) {
-      return null;
-    }
-
-    return $UserCopyWith<$Res>(_value.user!, (value) {
-      return _then(_value.copyWith(user: value));
-    });
   }
 }
 
 /// @nodoc
 
 class _$LoggedInImpl implements _LoggedIn {
-  const _$LoggedInImpl({this.user});
+  const _$LoggedInImpl({this.userId, this.username});
 
   @override
-  final User? user;
+  final int? userId;
+  @override
+  final String? username;
 
   @override
   String toString() {
-    return 'AuthState.loggedIn(user: $user)';
+    return 'AuthState.loggedIn(userId: $userId, username: $username)';
   }
 
   @override
@@ -960,11 +953,13 @@ class _$LoggedInImpl implements _LoggedIn {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoggedInImpl &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.username, username) ||
+                other.username == username));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user);
+  int get hashCode => Object.hash(runtimeType, userId, username);
 
   @JsonKey(ignore: true)
   @override
@@ -976,35 +971,35 @@ class _$LoggedInImpl implements _LoggedIn {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() appStarted,
-    required TResult Function(User? user) loggedIn,
+    required TResult Function(int? userId, String? username) loggedIn,
     required TResult Function(int uid) registered,
     required TResult Function() loading,
     required TResult Function(String error) error,
     required TResult Function() loggedOut,
     required TResult Function() initial,
   }) {
-    return loggedIn(user);
+    return loggedIn(userId, username);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? appStarted,
-    TResult? Function(User? user)? loggedIn,
+    TResult? Function(int? userId, String? username)? loggedIn,
     TResult? Function(int uid)? registered,
     TResult? Function()? loading,
     TResult? Function(String error)? error,
     TResult? Function()? loggedOut,
     TResult? Function()? initial,
   }) {
-    return loggedIn?.call(user);
+    return loggedIn?.call(userId, username);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? appStarted,
-    TResult Function(User? user)? loggedIn,
+    TResult Function(int? userId, String? username)? loggedIn,
     TResult Function(int uid)? registered,
     TResult Function()? loading,
     TResult Function(String error)? error,
@@ -1013,7 +1008,7 @@ class _$LoggedInImpl implements _LoggedIn {
     required TResult orElse(),
   }) {
     if (loggedIn != null) {
-      return loggedIn(user);
+      return loggedIn(userId, username);
     }
     return orElse();
   }
@@ -1066,9 +1061,11 @@ class _$LoggedInImpl implements _LoggedIn {
 }
 
 abstract class _LoggedIn implements AuthState {
-  const factory _LoggedIn({final User? user}) = _$LoggedInImpl;
+  const factory _LoggedIn({final int? userId, final String? username}) =
+      _$LoggedInImpl;
 
-  User? get user;
+  int? get userId;
+  String? get username;
   @JsonKey(ignore: true)
   _$$LoggedInImplCopyWith<_$LoggedInImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1139,7 +1136,7 @@ class _$RegisteredImpl implements _Registered {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() appStarted,
-    required TResult Function(User? user) loggedIn,
+    required TResult Function(int? userId, String? username) loggedIn,
     required TResult Function(int uid) registered,
     required TResult Function() loading,
     required TResult Function(String error) error,
@@ -1153,7 +1150,7 @@ class _$RegisteredImpl implements _Registered {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? appStarted,
-    TResult? Function(User? user)? loggedIn,
+    TResult? Function(int? userId, String? username)? loggedIn,
     TResult? Function(int uid)? registered,
     TResult? Function()? loading,
     TResult? Function(String error)? error,
@@ -1167,7 +1164,7 @@ class _$RegisteredImpl implements _Registered {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? appStarted,
-    TResult Function(User? user)? loggedIn,
+    TResult Function(int? userId, String? username)? loggedIn,
     TResult Function(int uid)? registered,
     TResult Function()? loading,
     TResult Function(String error)? error,
@@ -1276,7 +1273,7 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() appStarted,
-    required TResult Function(User? user) loggedIn,
+    required TResult Function(int? userId, String? username) loggedIn,
     required TResult Function(int uid) registered,
     required TResult Function() loading,
     required TResult Function(String error) error,
@@ -1290,7 +1287,7 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? appStarted,
-    TResult? Function(User? user)? loggedIn,
+    TResult? Function(int? userId, String? username)? loggedIn,
     TResult? Function(int uid)? registered,
     TResult? Function()? loading,
     TResult? Function(String error)? error,
@@ -1304,7 +1301,7 @@ class _$LoadingImpl implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? appStarted,
-    TResult Function(User? user)? loggedIn,
+    TResult Function(int? userId, String? username)? loggedIn,
     TResult Function(int uid)? registered,
     TResult Function()? loading,
     TResult Function(String error)? error,
@@ -1434,7 +1431,7 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() appStarted,
-    required TResult Function(User? user) loggedIn,
+    required TResult Function(int? userId, String? username) loggedIn,
     required TResult Function(int uid) registered,
     required TResult Function() loading,
     required TResult Function(String error) error,
@@ -1448,7 +1445,7 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? appStarted,
-    TResult? Function(User? user)? loggedIn,
+    TResult? Function(int? userId, String? username)? loggedIn,
     TResult? Function(int uid)? registered,
     TResult? Function()? loading,
     TResult? Function(String error)? error,
@@ -1462,7 +1459,7 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? appStarted,
-    TResult Function(User? user)? loggedIn,
+    TResult Function(int? userId, String? username)? loggedIn,
     TResult Function(int uid)? registered,
     TResult Function()? loading,
     TResult Function(String error)? error,
@@ -1571,7 +1568,7 @@ class _$LoggedOutImpl implements _LoggedOut {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() appStarted,
-    required TResult Function(User? user) loggedIn,
+    required TResult Function(int? userId, String? username) loggedIn,
     required TResult Function(int uid) registered,
     required TResult Function() loading,
     required TResult Function(String error) error,
@@ -1585,7 +1582,7 @@ class _$LoggedOutImpl implements _LoggedOut {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? appStarted,
-    TResult? Function(User? user)? loggedIn,
+    TResult? Function(int? userId, String? username)? loggedIn,
     TResult? Function(int uid)? registered,
     TResult? Function()? loading,
     TResult? Function(String error)? error,
@@ -1599,7 +1596,7 @@ class _$LoggedOutImpl implements _LoggedOut {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? appStarted,
-    TResult Function(User? user)? loggedIn,
+    TResult Function(int? userId, String? username)? loggedIn,
     TResult Function(int uid)? registered,
     TResult Function()? loading,
     TResult Function(String error)? error,
@@ -1703,7 +1700,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() appStarted,
-    required TResult Function(User? user) loggedIn,
+    required TResult Function(int? userId, String? username) loggedIn,
     required TResult Function(int uid) registered,
     required TResult Function() loading,
     required TResult Function(String error) error,
@@ -1717,7 +1714,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? appStarted,
-    TResult? Function(User? user)? loggedIn,
+    TResult? Function(int? userId, String? username)? loggedIn,
     TResult? Function(int uid)? registered,
     TResult? Function()? loading,
     TResult? Function(String error)? error,
@@ -1731,7 +1728,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? appStarted,
-    TResult Function(User? user)? loggedIn,
+    TResult Function(int? userId, String? username)? loggedIn,
     TResult Function(int uid)? registered,
     TResult Function()? loading,
     TResult Function(String error)? error,

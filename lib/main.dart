@@ -36,7 +36,7 @@ final _goRouter = GoRouter(
     return authState.whenOrNull(
       // loggedIn: (uid) => "/home",
       // registered: (_) => "/home",
-      loggedIn: (uid) => "/index",
+      loggedIn: (_, __) => "/index", // Triggered by AppStarted Event
       registered: (uid) => "/index",
     );
   },

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:power_lift/screens/home/home_page.dart';
 import 'package:power_lift/utils/dimen.dart';
+import 'package:power_lift/utils/routes.dart';
+
+import 'login/state/auth_bloc.dart';
 
 class AppBottomNavigationBar extends StatefulWidget {
   const AppBottomNavigationBar({super.key});
@@ -27,7 +32,26 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
         ),
         Container(
           alignment: Alignment.center,
-          child: Text('App Settings'),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('App settins'),
+              BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  state.whenOrNull(
+                    loggedOut: () => GoRouter.of(context).go(Routes.getStarted),
+                  );
+                },
+                child: TextButton(
+                  onPressed: () {
+                    context.read<AuthBloc>().add(AuthEvent.logOut());
+                  },
+                  child: Text("Log Out"),
+                ),
+              )
+            ],
+          ),
         ),
       ][currentPageIndex],
       bottomNavigationBar: NavigationBar(

@@ -18,9 +18,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           startApp: () async {
             try {
               final id = await storage.read(key: 'Id');
+              final username = await storage.read(key: 'username');
               if (id?.isNotEmpty == true) {
                 // emit(AuthState.loggedIn(int.parse(id!)));
-                emit(AuthState.loggedIn(user: user));
+                emit(AuthState.loggedIn(
+                    userId: int.parse(id!), username: username));
               } else {
                 emit(const AuthState.loggedOut());
               }
@@ -35,8 +37,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 key: 'Id',
                 value: response.user.Id.toString(),
               );
+              await storage.write(
+                key: 'username',
+                value: response.user.username,
+              );
               user = response.user;
-              emit(AuthState.loggedIn(user: response.user));
+              emit(AuthState.loggedIn(
+                  userId: response.user.Id, username: response.user.username));
             } on Exception catch (e) {
               emit(const AuthState.error(Errors.signInError));
               emit(const AuthState.initial());
@@ -47,6 +54,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               final result = await api
                   .createUser(CreateUser(username, password, fullName, email));
               await storage.write(key: 'Id', value: result.toString());
+              await storage.write(key: 'username', value: username);
               emit(AuthState.registered(result));
             } on Exception catch (_) {
               emit(const AuthState.error(Errors.couldNotCreateUser));
@@ -55,6 +63,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           },
           logOut: () async {
             await storage.delete(key: 'Id');
+            await storage.delete(key: 'username');
             emit(const AuthState.loggedOut());
           },
         );
@@ -81,7 +90,7 @@ class AuthEvent with _$AuthEvent {
 @freezed
 class AuthState with _$AuthState {
   const factory AuthState.appStarted() = _AppStarted;
-  const factory AuthState.loggedIn({User? user}) = _LoggedIn;
+  const factory AuthState.loggedIn({int? userId, String? username}) = _LoggedIn;
   const factory AuthState.registered(int uid) = _Registered;
   const factory AuthState.loading() = _Loading;
   const factory AuthState.error(String error) = _Error;

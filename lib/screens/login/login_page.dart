@@ -1,14 +1,8 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:power_lift/main.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
-import 'package:power_lift/screens/login/widgets/email_field_form_view.dart';
-import 'package:power_lift/screens/login/widgets/password_form_field_view.dart';
-import 'package:power_lift/screens/register/widgets/username_text_form_field_view.dart';
 import 'package:power_lift/utils/common.dart';
-import 'package:power_lift/utils/dimen.dart';
 import 'package:power_lift/utils/routes.dart';
 import 'package:power_lift/utils/strings.dart';
 
@@ -23,6 +17,8 @@ class _LoginPageState extends State<LoginPage> {
   late TextEditingController _username;
   late TextEditingController _password;
   late GlobalKey<FormState> _formKey;
+  late FocusNode userNameFocusNode = FocusNode();
+  late FocusNode passwordFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -44,8 +40,8 @@ class _LoginPageState extends State<LoginPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         state.whenOrNull(
-          loggedIn: (uid) {
-            context.replace(Routes.index);
+          loggedIn: (_, __) {
+            GoRouter.of(context).go(Routes.index);
           },
           error: (error) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -57,79 +53,146 @@ class _LoginPageState extends State<LoginPage> {
       child: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: Scaffold(
-          backgroundColor: Color(0xff596167),
-          // appBar: AppBar(
-          //   leading: const SizedBox.shrink(),
-          //   title: const Text(Strings.appName),
-          // ),
+          appBar: AppBar(),
           body: Form(
             key: _formKey,
-            child: SafeArea(
-              child: SingleChildScrollView(
-                physics: const ClampingScrollPhysics(),
+            child: Center(
+              child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-                    Icon(
-                      Icons.sports_gymnastics,
-                      size: 100,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                    const SizedBox(height: 40.0),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text.rich(
-                        TextSpan(
-                          text: Strings.dontHaveAnAccountYet,
-                          style: Theme.of(context).textTheme.bodySmall,
-                          children: [
-                            TextSpan(
-                              text: Strings.register,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  context.push(Routes.register);
-                                },
-                            )
-                          ],
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            controller: _username,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Username field \nrequired";
+                              }
+                              return null;
+                            },
+                            autofocus: true,
+                            focusNode: userNameFocusNode,
+                            onFieldSubmitted: (value) => FocusScope.of(context)
+                                .requestFocus(passwordFocusNode),
+                            cursorColor:
+                                Theme.of(context).colorScheme.secondary,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: Strings.username,
+                              hintStyle: TextStyle(
+                                color: Colors.white.withOpacity(0.8),
+                                fontSize: 30,
+                              ),
+                              fillColor: Colors.transparent,
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2.0,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                ),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2.0,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                ),
+                              ),
+                              errorBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2.0,
+                                  color: Theme.of(context).colorScheme.error,
+                                ),
+                              ),
+                              focusedErrorBorder: UnderlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: const BorderSide(
+                                  width: 2.0,
+                                  color: Colors.redAccent,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                        const SizedBox(width: 40.0),
+                        Expanded(
+                          child: TextFormField(
+                            controller: _password,
+                            obscureText: true,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Password field is \nrequired.";
+                              }
+                              return null;
+                            },
+                            onFieldSubmitted: (value) {
+                              final isValid = _formKey.currentState?.validate();
+                              if (isValid == true) {
+                                context.read<AuthBloc>().add(
+                                      AuthEvent.logIn(
+                                        _username.text,
+                                        _password.text,
+                                      ),
+                                    );
+                              }
+                            },
+                            autofocus: true,
+                            focusNode: passwordFocusNode,
+                            cursorColor:
+                                Theme.of(context).colorScheme.secondary,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: Strings.password,
+                              hintStyle: TextStyle(
+                                color: Colors.white.withOpacity(0.8),
+                                fontSize: 30,
+                              ),
+                              fillColor: Colors.transparent,
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2.0,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                ),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2.0,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                ),
+                              ),
+                              errorBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2.0,
+                                  color: Theme.of(context).colorScheme.error,
+                                ),
+                              ),
+                              focusedErrorBorder: UnderlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: const BorderSide(
+                                  width: 2.0,
+                                  color: Colors.redAccent,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                    const SizedBox(height: 10.0),
-                    // EmailFieldFormView(email: _email),
-                    UsernameTextFormFieldView(username: _username),
                     const SizedBox(height: 20.0),
-                    PasswordFormFieldView(password: _password),
-                    Dimen.isBigScreen(context)
-                        ? SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.1,
-                          )
-                        : const SizedBox(height: 20.0),
-                    TextButton(
-                      style: Theme.of(context).textButtonTheme.style?.copyWith(
-                              backgroundColor: MaterialStatePropertyAll(
-                            Theme.of(context)
-                                .colorScheme
-                                .secondary
-                                .withOpacity(0.5),
-                          )),
-                      onPressed: () {
-                        final isValid = _formKey.currentState?.validate();
-                        if (isValid == true) {
-                          context.read<AuthBloc>().add(
-                              AuthEvent.logIn(_username.text, _password.text));
-                        }
-                      },
-                      child: const Text(
-                        Strings.signIn,
-                      ),
-                    ),
                   ],
                 ),
               ),

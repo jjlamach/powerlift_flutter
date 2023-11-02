@@ -19,4 +19,8 @@ class Strings {
   static const String whatIsYourEmail = 'What is your email?';
   static const String whatIsYourPassword = 'What password you want to use?';
   static const String whatIsYourUsername = 'What username do you want to have?';
+  static const String getStarted = 'Get Started';
+  static const String appMessage1 = 'One more rep, one step closer';
+  static const String appMessage2 =
+      'Track gains, explore routines, and connect with peers. Every rep and graph counts';
 }
