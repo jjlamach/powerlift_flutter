@@ -1,4 +1,4 @@
-# power_lift
+# PowerLift App (WIP)
 
 # Devs
 - Micah Kimel
