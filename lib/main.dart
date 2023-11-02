@@ -273,7 +273,7 @@ class PowerLiftApp extends StatelessWidget {
             ),
           ),
           snackBarTheme: SnackBarThemeData(
-            backgroundColor: const Color(0xffF99417).withOpacity(0.7),
+            backgroundColor: const Color(0xffa3ec3f).withOpacity(0.7),
             actionTextColor: Colors.white,
           ),
         ),

@@ -43,6 +43,11 @@ class FullNameOnboardingPage extends StatelessWidget {
                         state.whenOrNull(
                           registered: (uid) =>
                               GoRouter.of(context).replace(Routes.index),
+                          error: (error) =>
+                              ScaffoldMessenger.of(context).showSnackBar(
+                            Common.appSnackBar(
+                                'Could not create account. Contact support.'),
+                          ),
                         );
                       },
                       child: OutlinedButton(
