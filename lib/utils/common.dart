@@ -12,4 +12,14 @@ class Common {
       ),
     );
   }
+
+  static Container appCircle({Widget? child}) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Color(0xff333333),
+        shape: BoxShape.circle,
+      ),
+      child: child,
+    );
+  }
 }

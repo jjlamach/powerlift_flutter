@@ -9,7 +9,7 @@ import 'package:power_lift/repository/power_lift_api.dart';
 import 'package:power_lift/repository/power_lift_api_impl.dart';
 import 'package:power_lift/screens/bottom_navigation_bar.dart';
 import 'package:power_lift/screens/home/home_page.dart';
-import 'package:power_lift/screens/login/TokenInterceptor.dart';
+import 'package:power_lift/screens/login/token_interceptor.dart';
 import 'package:power_lift/screens/login/login_page.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
 import 'package:power_lift/screens/onboarding/confirm_password_onboarding_page.dart';
@@ -271,7 +271,7 @@ class PowerLiftApp extends StatelessWidget {
             ),
             titleTextStyle: TextStyle(
               color: Colors.white,
-              fontSize: 30,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),

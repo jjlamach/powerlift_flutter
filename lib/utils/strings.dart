@@ -23,4 +23,5 @@ class Strings {
   static const String appMessage1 = 'One more rep, one step closer';
   static const String appMessage2 =
       'Track gains, explore routines, and connect with peers. Every rep and graph counts';
+  static const String bicep = '💪';
 }
