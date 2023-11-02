@@ -9,6 +9,7 @@ import 'package:power_lift/repository/power_lift_api.dart';
 import 'package:power_lift/repository/power_lift_api_impl.dart';
 import 'package:power_lift/screens/bottom_navigation_bar.dart';
 import 'package:power_lift/screens/home/home_page.dart';
+import 'package:power_lift/screens/login/TokenInterceptor.dart';
 import 'package:power_lift/screens/login/login_page.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
 import 'package:power_lift/screens/onboarding/confirm_password_onboarding_page.dart';
@@ -102,7 +103,9 @@ const storage = FlutterSecureStorage(
 
 void _setUpDependencies() {
   // Register Dio
-  getIt.registerLazySingleton(() => Dio());
+  Dio dio = Dio();
+  dio.interceptors.add(TokenInterceptor());
+  getIt.registerLazySingleton(() => dio);
 
   // Register PowerLiftApi
   getIt.registerLazySingleton<PowerLiftApi>(() {

@@ -17,12 +17,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await event.when(
           startApp: () async {
             try {
-              final id = await storage.read(key: 'Id');
+              final token = await storage.read(key: 'token');
               final username = await storage.read(key: 'username');
-              if (id?.isNotEmpty == true) {
-                // emit(AuthState.loggedIn(int.parse(id!)));
-                emit(AuthState.loggedIn(
-                    userId: int.parse(id!), username: username));
+              if (token?.isNotEmpty == true) {
+                emit(AuthState.loggedIn(token: token, username: username));
               } else {
                 emit(const AuthState.loggedOut());
               }
@@ -34,16 +32,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             try {
               final response = await api.login(email, password);
               await storage.write(
-                key: 'Id',
-                value: response.user.Id.toString(),
+                key: 'token',
+                value: response.access_token,
               );
               await storage.write(
                 key: 'username',
                 value: response.user.username,
               );
               user = response.user;
+
               emit(AuthState.loggedIn(
-                  userId: response.user.Id, username: response.user.username));
+                  token: response.access_token,
+                  username: response.user.username));
             } on Exception catch (e) {
               emit(const AuthState.error(Errors.signInError));
               emit(const AuthState.initial());
@@ -53,8 +53,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             try {
               final result = await api
                   .createUser(CreateUser(username, password, fullName, email));
-              await storage.write(key: 'Id', value: result.toString());
-              await storage.write(key: 'username', value: username);
               emit(AuthState.registered(result));
             } on Exception catch (_) {
               emit(const AuthState.error(Errors.couldNotCreateUser));
@@ -62,7 +60,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             }
           },
           logOut: () async {
-            await storage.delete(key: 'Id');
+            await storage.delete(key: 'token');
             await storage.delete(key: 'username');
             emit(const AuthState.loggedOut());
           },
@@ -90,7 +88,8 @@ class AuthEvent with _$AuthEvent {
 @freezed
 class AuthState with _$AuthState {
   const factory AuthState.appStarted() = _AppStarted;
-  const factory AuthState.loggedIn({int? userId, String? username}) = _LoggedIn;
+  const factory AuthState.loggedIn({String? token, String? username}) =
+      _LoggedIn;
   const factory AuthState.registered(int uid) = _Registered;
   const factory AuthState.loading() = _Loading;
   const factory AuthState.error(String error) = _Error;
