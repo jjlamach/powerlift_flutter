@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hive/hive.dart';
 import 'package:power_lift/main.dart';
 import 'package:power_lift/models/createUserDto/create_user.dart';
 import 'package:power_lift/models/userDto/user.dart';
@@ -11,15 +12,19 @@ part 'auth_bloc.freezed.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final PowerLiftApiImpl api;
   User? user;
+
+  final Box storage = Hive.box('appStorage');
+
   AuthBloc(this.api) : super(const _AppStarted()) {
     on<AuthEvent>(
       (event, emit) async {
         await event.when(
           startApp: () async {
             try {
-              final token = await storage.read(key: 'token');
-              final username = await storage.read(key: 'username');
-              if (token?.isNotEmpty == true) {
+              final token = storage.get('token');
+              final username = storage.get('username');
+
+              if (token != null) {
                 emit(AuthState.loggedIn(token: token, username: username));
               } else {
                 emit(const AuthState.loggedOut());
@@ -31,19 +36,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           logIn: (email, password) async {
             try {
               final response = await api.login(email, password);
-              await storage.write(
-                key: 'token',
-                value: response.access_token,
-              );
-              await storage.write(
-                key: 'username',
-                value: response.user.username,
-              );
+              storage.put('token', response.access_token);
+              storage.put('username', response.user.username);
+
               user = response.user;
 
-              emit(AuthState.loggedIn(
+              emit(
+                AuthState.loggedIn(
                   token: response.access_token,
-                  username: response.user.username));
+                  username: response.user.username,
+                ),
+              );
             } on Exception catch (e) {
               emit(const AuthState.error(Errors.signInError));
               emit(const AuthState.initial());
@@ -60,9 +63,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             }
           },
           logOut: () async {
-            await storage.delete(key: 'token');
-            await storage.delete(key: 'username');
-            emit(const AuthState.loggedOut());
+            try {
+              await storage.delete('token');
+              await storage.delete('username');
+              emit(const AuthState.loggedOut());
+            } on Exception catch (_) {
+              emit(const AuthState.error('Could not log out'));
+            }
           },
         );
       },

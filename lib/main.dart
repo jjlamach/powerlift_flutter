@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logger/logger.dart';
 import 'package:power_lift/repository/power_lift_api.dart';
 import 'package:power_lift/repository/power_lift_api_impl.dart';
@@ -22,6 +22,7 @@ import 'package:power_lift/screens/onboarding/username_onboarding_page.dart';
 import 'package:power_lift/screens/register/register_page.dart';
 import 'package:power_lift/screens/splashscreen/get_started_page.dart';
 import 'package:power_lift/screens/splashscreen/splashscreen_page.dart';
+import 'package:power_lift/utils/routes.dart';
 
 // logger
 final kLogger = Logger(
@@ -38,8 +39,8 @@ final _goRouter = GoRouter(
     return authState.whenOrNull(
       // loggedIn: (uid) => "/home",
       // registered: (_) => "/home",
-      loggedIn: (_, __) => "/index", // Triggered by AppStarted Event
-      registered: (uid) => "/index",
+      loggedIn: (_, __) => Routes.index, // Triggered by AppStarted Event
+      registered: (uid) => Routes.index,
     );
   },
   routes: [
@@ -95,14 +96,7 @@ final _goRouter = GoRouter(
 // Service locator
 final getIt = GetIt.instance;
 
-// Local Storage
-const storage = FlutterSecureStorage(
-  aOptions: AndroidOptions(
-    encryptedSharedPreferences: true,
-  ),
-);
-
-void _setUpDependencies() {
+Future<void> _setUpDependencies() async {
   // Register Dio
   Dio dio = Dio();
   dio.interceptors.add(TokenInterceptor());
@@ -121,7 +115,7 @@ void _setUpDependencies() {
   });
 }
 
-void _setUpBlocsAndCubits() {
+Future<void> _setUpBlocsAndCubits() async {
   getIt.registerSingleton(
     AuthBloc(
       getIt.get(),
@@ -135,15 +129,24 @@ void _setUpBlocsAndCubits() {
   );
 }
 
-void _setUp() {
-  _setUpDependencies();
-  _setUpBlocsAndCubits();
+Future<void> _setUp() async {
+  await _setUpStorage();
+  await _setUpDependencies();
+  await _setUpBlocsAndCubits();
 }
 
-void main() {
+Future<void> _setUpStorage() async {
+  await Hive.initFlutter();
+  await Hive.openBox('appStorage');
+}
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  _setUp();
-  runApp(const PowerLiftApp());
+  await _setUp().then(
+    (_) => runApp(
+      const PowerLiftApp(),
+    ),
+  );
 }
 
 class PowerLiftApp extends StatelessWidget {
