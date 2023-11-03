@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       state.length,
                       (index) {
                         return Container(
-                          width: 200,
+                          width: 100,
                           decoration: BoxDecoration(
                             color: _selectedIndex == index
                                 ? Theme.of(context).colorScheme.secondary
