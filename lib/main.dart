@@ -9,6 +9,7 @@ import 'package:power_lift/repository/power_lift_api.dart';
 import 'package:power_lift/repository/power_lift_api_impl.dart';
 import 'package:power_lift/screens/bottom_navigation_bar.dart';
 import 'package:power_lift/screens/home/home_page.dart';
+import 'package:power_lift/screens/home/state/category_cubit.dart';
 import 'package:power_lift/screens/login/token_interceptor.dart';
 import 'package:power_lift/screens/login/login_page.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
@@ -129,6 +130,9 @@ void _setUpBlocsAndCubits() {
   getIt.registerFactory(
     () => OnboardingCubit(),
   );
+  getIt.registerFactory(
+    () => CategoryCubit(getIt.get()),
+  );
 }
 
 void _setUp() {
@@ -158,6 +162,9 @@ class PowerLiftApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => getIt<OnboardingCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<CategoryCubit>()..getCategories(),
         )
       ],
       child: MaterialApp.router(
@@ -167,15 +174,15 @@ class PowerLiftApp extends StatelessWidget {
           useMaterial3: true,
           colorScheme: const ColorScheme(
             brightness: Brightness.light,
-            primary: const Color(0xff000000),
+            primary: Color(0xff000000),
             onPrimary: Colors.white,
-            secondary: const Color(0xffa3ec3f),
+            secondary: Color(0xffa3ec3f),
             onSecondary: Colors.black,
             error: Colors.redAccent,
             onError: Colors.white,
             background: Colors.black,
             onBackground: Colors.black,
-            surface: const Color(0xff1e2021),
+            surface: Color(0xff1e2021),
             onSurface: Colors.white,
           ),
           textSelectionTheme: const TextSelectionThemeData(
