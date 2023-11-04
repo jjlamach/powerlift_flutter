@@ -23,6 +23,7 @@ class ConfirmPasswordOnboardingPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const Expanded(child: SizedBox()),
                 const Text(
                   Strings.confirmPassword,
                   style: TextStyle(
@@ -30,47 +31,50 @@ class ConfirmPasswordOnboardingPage extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(height: 20.0),
-                TextField(
-                  autofocus: true,
-                  obscureText: true,
-                  onChanged: (value) =>
-                      context.read<OnboardingCubit>().confirmPasswordTxt(value),
-                  keyboardType: TextInputType.text,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  cursorColor: Theme.of(context).colorScheme.secondary,
-                  decoration: InputDecoration(
-                    hintText: Strings.password,
-                    hintStyle: TextStyle(
-                      color: Colors.white.withOpacity(0.8),
-                      fontSize: 30,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 40.0),
+                  child: TextField(
+                    autofocus: true,
+                    obscureText: true,
+                    autofillHints: const <String>[AutofillHints.oneTimeCode],
+                    onChanged: (value) => context
+                        .read<OnboardingCubit>()
+                        .confirmPasswordTxt(value),
+                    keyboardType: TextInputType.text,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
                     ),
-                    fillColor: Colors.transparent,
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 2.0,
-                        color: Theme.of(context).colorScheme.secondary,
+                    cursorColor: Theme.of(context).colorScheme.secondary,
+                    decoration: InputDecoration(
+                      hintText: Strings.password,
+                      hintStyle: TextStyle(
+                        color: Colors.white.withOpacity(0.8),
+                        fontSize: 30,
                       ),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 2.0,
-                        color: Theme.of(context).colorScheme.secondary,
+                      fillColor: Colors.transparent,
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2.0,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
                       ),
-                    ),
-                    errorBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 2.0,
-                        color: Theme.of(context).colorScheme.error,
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2.0,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                      errorBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2.0,
+                          color: Theme.of(context).colorScheme.error,
+                        ),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 40.0),
                 Center(
                   child: SizedBox(
                     width: double.infinity,
@@ -98,6 +102,7 @@ class ConfirmPasswordOnboardingPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                const Expanded(flex: 2, child: SizedBox()),
               ],
             ),
           ),

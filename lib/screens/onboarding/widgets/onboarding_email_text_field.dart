@@ -11,7 +11,7 @@ class OnboardingEmailTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      autofocus: true,
+      autofocus: false,
       onChanged: (value) => context.read<OnboardingCubit>().emailText(value),
       keyboardType: TextInputType.emailAddress,
       style: const TextStyle(

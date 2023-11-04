@@ -11,6 +11,7 @@ class OnboardingPasswordTextField extends StatelessWidget {
     return TextField(
       autofocus: true,
       obscureText: true,
+      autofillHints: const <String>[AutofillHints.oneTimeCode],
       onChanged: (value) => context.read<OnboardingCubit>().passwordTxt(value),
       keyboardType: TextInputType.text,
       style: const TextStyle(

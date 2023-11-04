@@ -24,6 +24,7 @@ class UsernameOnboardingPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const Expanded(child: SizedBox()),
                 const Text(
                   Strings.whatIsYourUsername,
                   style: TextStyle(
@@ -31,9 +32,10 @@ class UsernameOnboardingPage extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(height: 20.0),
-                const OnboardingUsernameTextField(),
-                const SizedBox(height: 40.0),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 40.0),
+                  child: OnboardingUsernameTextField(),
+                ),
                 Center(
                   child: SizedBox(
                     width: double.infinity,
@@ -53,6 +55,7 @@ class UsernameOnboardingPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                const Expanded(flex: 2, child: SizedBox()),
               ],
             ),
           ),

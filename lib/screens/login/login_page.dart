@@ -127,6 +127,9 @@ class _LoginPageState extends State<LoginPage> {
                           child: TextFormField(
                             controller: _password,
                             obscureText: true,
+                            autofillHints: const <String>[
+                              AutofillHints.oneTimeCode
+                            ],
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return "Password field is \nrequired.";

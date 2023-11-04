@@ -25,6 +25,7 @@ class FullNameOnboardingPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const Expanded(child: SizedBox()),
                 const Text(
                   Strings.fullName,
                   style: TextStyle(
@@ -32,9 +33,10 @@ class FullNameOnboardingPage extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(height: 20.0),
-                const OnbordingFullNameTextField(),
-                const SizedBox(height: 40.0),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 40.0),
+                  child: OnbordingFullNameTextField(),
+                ),
                 Center(
                   child: SizedBox(
                     width: double.infinity,
@@ -42,7 +44,7 @@ class FullNameOnboardingPage extends StatelessWidget {
                       listener: (context, state) {
                         state.whenOrNull(
                           registered: (uid) =>
-                              GoRouter.of(context).replace(Routes.login),
+                              GoRouter.of(context).go(Routes.login),
                           error: (error) =>
                               ScaffoldMessenger.of(context).showSnackBar(
                             Common.appSnackBar(
@@ -78,6 +80,7 @@ class FullNameOnboardingPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                const Expanded(flex: 2, child: SizedBox()),
               ],
             ),
           ),

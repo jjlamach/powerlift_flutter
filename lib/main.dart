@@ -1,5 +1,7 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -140,10 +142,14 @@ Future<void> _setUpStorage() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await _setUp().then(
-    (_) => runApp(
-      const PowerLiftApp(),
-    ),
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
+    (value) async {
+      await _setUp().then(
+        (_) => runApp(
+          const PowerLiftApp(),
+        ),
+      );
+    },
   );
 }
 

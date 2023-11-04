@@ -24,6 +24,7 @@ class PasswordOnboardingPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const Expanded(child: SizedBox()),
                 const Text(
                   Strings.whatIsYourPassword,
                   style: TextStyle(
@@ -31,9 +32,10 @@ class PasswordOnboardingPage extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(height: 20.0),
-                const OnboardingPasswordTextField(),
-                const SizedBox(height: 40.0),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 40.0),
+                  child: OnboardingPasswordTextField(),
+                ),
                 Center(
                   child: SizedBox(
                     width: double.infinity,
@@ -54,6 +56,7 @@ class PasswordOnboardingPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                const Expanded(flex: 2, child: SizedBox()),
               ],
             ),
           ),
