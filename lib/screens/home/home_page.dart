@@ -55,10 +55,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // final categories = context.read<CategoryCubit>().state;
-    // if (categories.isEmpty) {
-    //   return const SizedBox();
-    // }
     return SafeArea(
       child: BlocProvider<CategoryCubit>(
         create: (context) => getIt<CategoryCubit>()..getCategories(),
@@ -71,9 +67,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               body: CustomScrollView(
                 slivers: [
                   SliverAppBar(
-                    collapsedHeight: Dimen.isBigScreen(context)
-                        ? MediaQuery.of(context).size.height * 0.2
-                        : MediaQuery.of(context).size.height * 0.3,
+                    primary: true,
+                    collapsedHeight: 200,
                     flexibleSpace: const HomePageAppBarView(),
                     bottom: TabBar(
                       controller: _tabController,

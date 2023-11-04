@@ -9,9 +9,8 @@ class Dimen {
     Size screenSize = MediaQuery.of(context).size;
     double width = screenSize.width;
     double height = screenSize.height;
-    double diagonal = math.sqrt((width * width) + (height * height));
     // Large screen
-    if (diagonal > 1000) {
+    if (height > 1000) {
       return true;
       // Small screen
     } else {

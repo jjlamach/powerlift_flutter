@@ -30,29 +30,6 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
           alignment: Alignment.center,
           child: const Text('Social'),
         ),
-        Container(
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text('App settins'),
-              BlocListener<AuthBloc, AuthState>(
-                listener: (context, state) {
-                  state.whenOrNull(
-                    loggedOut: () => GoRouter.of(context).go(Routes.getStarted),
-                  );
-                },
-                child: TextButton(
-                  onPressed: () {
-                    context.read<AuthBloc>().add(AuthEvent.logOut());
-                  },
-                  child: Text("Log Out"),
-                ),
-              )
-            ],
-          ),
-        ),
       ][currentPageIndex],
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
@@ -68,8 +45,6 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
               icon: Icon(Icons.search, size: Dimen.iconSize), label: ""),
           NavigationDestination(
               icon: Icon(Icons.feed, size: Dimen.iconSize), label: ""),
-          NavigationDestination(
-              icon: Icon(Icons.settings, size: Dimen.iconSize), label: ""),
         ],
       ),
     );
