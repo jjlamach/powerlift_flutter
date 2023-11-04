@@ -42,7 +42,7 @@ class FullNameOnboardingPage extends StatelessWidget {
                       listener: (context, state) {
                         state.whenOrNull(
                           registered: (uid) =>
-                              GoRouter.of(context).replace(Routes.index),
+                              GoRouter.of(context).replace(Routes.login),
                           error: (error) =>
                               ScaffoldMessenger.of(context).showSnackBar(
                             Common.appSnackBar(

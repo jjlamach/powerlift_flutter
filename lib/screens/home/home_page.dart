@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:power_lift/main.dart';
 import 'package:power_lift/models/exerciseDto/category_dto.dart';
 import 'package:power_lift/screens/home/state/category_cubit.dart';
 import 'package:power_lift/screens/home/widgets/home_page_app_bar_view.dart';
@@ -54,66 +55,69 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final categories = context.read<CategoryCubit>().state;
-    if (categories.isEmpty) {
-      return const SizedBox();
-    }
+    // final categories = context.read<CategoryCubit>().state;
+    // if (categories.isEmpty) {
+    //   return const SizedBox();
+    // }
     return SafeArea(
-      child: BlocBuilder<CategoryCubit, List<CategoryDto>>(
-        builder: (context, state) {
-          if (state.isEmpty) {
-            return const SizedBox();
-          }
-          return Scaffold(
-            body: CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  collapsedHeight: Dimen.isBigScreen(context)
-                      ? MediaQuery.of(context).size.height * 0.2
-                      : MediaQuery.of(context).size.height * 0.3,
-                  flexibleSpace: const HomePageAppBarView(),
-                  bottom: TabBar(
-                    controller: _tabController,
-                    onTap: (index) {
-                      _tabController.animateTo(
-                        index,
-                      );
-                    },
-                    isScrollable: true,
-                    overlayColor:
-                        const MaterialStatePropertyAll(Colors.transparent),
-                    dividerColor: Colors.transparent,
-                    padding: const EdgeInsets.only(bottom: 40.0),
-                    tabs: List.generate(
-                      state.length,
-                      (index) {
-                        return Container(
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: _selectedIndex == index
-                                ? Theme.of(context).colorScheme.secondary
-                                : const Color(0xff191919),
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Tab(text: state[index].Name),
+      child: BlocProvider<CategoryCubit>(
+        create: (context) => getIt<CategoryCubit>()..getCategories(),
+        child: BlocBuilder<CategoryCubit, List<CategoryDto>>(
+          builder: (context, state) {
+            if (state.isEmpty) {
+              return const SizedBox();
+            }
+            return Scaffold(
+              body: CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    collapsedHeight: Dimen.isBigScreen(context)
+                        ? MediaQuery.of(context).size.height * 0.2
+                        : MediaQuery.of(context).size.height * 0.3,
+                    flexibleSpace: const HomePageAppBarView(),
+                    bottom: TabBar(
+                      controller: _tabController,
+                      onTap: (index) {
+                        _tabController.animateTo(
+                          index,
                         );
                       },
+                      isScrollable: true,
+                      overlayColor:
+                          const MaterialStatePropertyAll(Colors.transparent),
+                      dividerColor: Colors.transparent,
+                      padding: const EdgeInsets.only(bottom: 40.0),
+                      tabs: List.generate(
+                        state.length,
+                        (index) {
+                          return Container(
+                            width: 100,
+                            decoration: BoxDecoration(
+                              color: _selectedIndex == index
+                                  ? Theme.of(context).colorScheme.secondary
+                                  : const Color(0xff191919),
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            child: Tab(text: state[index].Name),
+                          );
+                        },
+                      ),
                     ),
                   ),
-                ),
-                SliverFillRemaining(
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: List.generate(
-                      state.length,
-                      (index) => Text('${state[index].Name}'),
+                  SliverFillRemaining(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: List.generate(
+                        state.length,
+                        (index) => Text('${state[index].Name}'),
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          );
-        },
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

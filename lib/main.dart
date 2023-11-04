@@ -37,10 +37,8 @@ final _goRouter = GoRouter(
   redirect: (context, state) {
     final authState = context.read<AuthBloc>().state;
     return authState.whenOrNull(
-      // loggedIn: (uid) => "/home",
-      // registered: (_) => "/home",
       loggedIn: (_, __) => Routes.index, // Triggered by AppStarted Event
-      registered: (uid) => Routes.index,
+      registered: (uid) => Routes.login,
     );
   },
   routes: [
