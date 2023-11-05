@@ -49,14 +49,8 @@ class HomePageAppBarView extends StatelessWidget {
                   ),
                   Common.appCircle(
                     child: IconButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => AppSettings(),
-                          ),
-                        );
-                      },
-                      icon: const Icon(Icons.person, size: 30),
+                      onPressed: () {},
+                      icon: const Icon(Icons.settings, size: 30),
                     ),
                   ),
                 ],

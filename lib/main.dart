@@ -55,8 +55,18 @@ final _goRouter = GoRouter(
       routes: [
         GoRoute(
           path: 'home',
-          builder: (context, state) => const HomePage(),
+          pageBuilder: (context, state) => MaterialPage(
+            key: state.pageKey,
+            child: const HomePage(),
+          ),
         ),
+        GoRoute(
+          path: 'app-settings',
+          pageBuilder: (context, state) => MaterialPage(
+            key: state.pageKey,
+            child: const AppSettings(),
+          ),
+        )
       ],
     ),
     GoRoute(
@@ -91,10 +101,6 @@ final _goRouter = GoRouter(
       path: '/onboarding-fullName',
       builder: (context, state) => const FullNameOnboardingPage(),
     ),
-    GoRoute(
-      path: '/app-settings',
-      builder: (context, state) => const AppSettings(),
-    )
   ],
 );
 

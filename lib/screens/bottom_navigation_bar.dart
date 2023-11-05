@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:power_lift/screens/home/home_page.dart';
+import 'package:power_lift/screens/settings/app_settings.dart';
 import 'package:power_lift/utils/dimen.dart';
 import 'package:power_lift/utils/routes.dart';
 
@@ -20,7 +21,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: <Widget>[
+      body: [
         const HomePage(),
         Container(
           alignment: Alignment.center,
@@ -30,6 +31,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
           alignment: Alignment.center,
           child: const Text('Social'),
         ),
+        const AppSettings(),
       ][currentPageIndex],
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
@@ -45,6 +47,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
               icon: Icon(Icons.search, size: Dimen.iconSize), label: ""),
           NavigationDestination(
               icon: Icon(Icons.feed, size: Dimen.iconSize), label: ""),
+          NavigationDestination(icon: Icon(Icons.person), label: ""),
         ],
       ),
     );
