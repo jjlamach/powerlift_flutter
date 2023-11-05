@@ -1,7 +1,7 @@
 import 'package:power_lift/main.dart';
 import 'package:power_lift/models/createUserDto/create_user.dart';
 import 'package:power_lift/models/exerciseDto/category_dto.dart';
-import 'package:power_lift/models/exerciseDto/category_response.dart';
+import 'package:power_lift/models/exerciseDto/exercise_dto.dart';
 import 'package:power_lift/models/loginDto/login_dto.dart';
 import 'package:power_lift/models/userResponseDto/user_response.dart';
 import 'package:power_lift/repository/power_lift_api.dart';
@@ -38,6 +38,16 @@ class PowerLiftApiImpl {
       return result;
     } on Exception catch (e) {
       kLogger.e('Could not get categories.');
+      rethrow;
+    }
+  }
+
+  Future<List<ExerciseDto>> getExercisesByCategories() async {
+    try {
+      List<ExerciseDto> result = await _api.exercises();
+      return result;
+    } on Exception catch (e) {
+      kLogger.e('Could not get exercises for the categories.');
       rethrow;
     }
   }

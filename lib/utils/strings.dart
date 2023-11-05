@@ -24,4 +24,5 @@ class Strings {
   static const String appMessage2 =
       'Track gains, explore routines, and connect with peers. Every rep and graph counts';
   static const String bicep = '💪';
+  static const String logIn = 'Log In';
 }

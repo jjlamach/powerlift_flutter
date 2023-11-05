@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:power_lift/models/createUserDto/create_user.dart';
 import 'package:power_lift/models/exerciseDto/category_dto.dart';
-import 'package:power_lift/models/exerciseDto/category_response.dart';
+import 'package:power_lift/models/exerciseDto/exercise_dto.dart';
 import 'package:power_lift/models/loginDto/login_dto.dart';
 import 'package:power_lift/models/userResponseDto/user_response.dart';
 import 'package:retrofit/retrofit.dart';
@@ -20,4 +20,7 @@ abstract class PowerLiftApi {
 
   @GET('/getExerciseCategory')
   Future<List<CategoryDto>> categories();
+
+  @GET('/getExerciseType')
+  Future<List<ExerciseDto>> exercises();
 }

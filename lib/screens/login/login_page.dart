@@ -53,7 +53,9 @@ class _LoginPageState extends State<LoginPage> {
       child: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: Scaffold(
-          appBar: AppBar(),
+          appBar: AppBar(
+            title: const Text(Strings.logIn),
+          ),
           body: Form(
             key: _formKey,
             child: Center(

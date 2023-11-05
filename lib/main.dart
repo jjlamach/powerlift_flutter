@@ -1,4 +1,3 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +11,7 @@ import 'package:power_lift/repository/power_lift_api_impl.dart';
 import 'package:power_lift/screens/bottom_navigation_bar.dart';
 import 'package:power_lift/screens/home/home_page.dart';
 import 'package:power_lift/screens/home/state/category_cubit.dart';
+import 'package:power_lift/screens/home/state/exercises_cubit.dart';
 import 'package:power_lift/screens/login/token_interceptor.dart';
 import 'package:power_lift/screens/login/login_page.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
@@ -138,6 +138,11 @@ Future<void> _setUpBlocsAndCubits() async {
   getIt.registerFactory(
     () => CategoryCubit(getIt.get()),
   );
+  getIt.registerFactory(
+    () => ExercisesCubit(
+      getIt.get(),
+    ),
+  );
 }
 
 Future<void> _setUp() async {
@@ -183,6 +188,9 @@ class PowerLiftApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => getIt<CategoryCubit>()..getCategories(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<ExercisesCubit>()..getExercises(),
         )
       ],
       child: MaterialApp.router(

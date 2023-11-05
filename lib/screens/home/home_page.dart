@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:power_lift/main.dart';
 import 'package:power_lift/models/exerciseDto/category_dto.dart';
+import 'package:power_lift/models/exerciseDto/exercise_dto.dart';
 import 'package:power_lift/screens/home/state/category_cubit.dart';
+import 'package:power_lift/screens/home/state/exercises_cubit.dart';
 import 'package:power_lift/screens/home/widgets/home_page_app_bar_view.dart';
 import 'package:power_lift/utils/dimen.dart';
 
