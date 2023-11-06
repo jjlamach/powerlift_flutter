@@ -29,11 +29,12 @@ import 'package:power_lift/utils/routes.dart';
 
 // logger
 final kLogger = Logger(
-    filter: DevelopmentFilter(),
-    printer: PrettyPrinter(
-      colors: true,
-      printEmojis: true,
-    ));
+  filter: DevelopmentFilter(),
+  printer: PrettyPrinter(
+    colors: true,
+    printEmojis: true,
+  ),
+);
 
 // Navigation
 final _goRouter = GoRouter(
@@ -190,7 +191,7 @@ class PowerLiftApp extends StatelessWidget {
           create: (context) => getIt<CategoryCubit>()..getCategories(),
         ),
         BlocProvider(
-          create: (context) => getIt<ExercisesCubit>()..getExercises(),
+          create: (context) => getIt<ExercisesCubit>(),
         )
       ],
       child: MaterialApp.router(

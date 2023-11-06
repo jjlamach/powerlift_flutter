@@ -6,7 +6,8 @@ import 'package:power_lift/models/exerciseDto/exercise_dto.dart';
 import 'package:power_lift/screens/home/state/category_cubit.dart';
 import 'package:power_lift/screens/home/state/exercises_cubit.dart';
 import 'package:power_lift/screens/home/widgets/home_page_app_bar_view.dart';
-import 'package:power_lift/utils/dimen.dart';
+import 'package:power_lift/utils/app_circular_progress_indicator.dart';
+import 'package:power_lift/utils/common.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,6 +25,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = TabController(length: 0, vsync: this);
+    context.read<ExercisesCubit>().getExercise(1);
   }
 
   @override
@@ -39,7 +41,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       );
       // Listener to change state when the tab changes
       _tabController.addListener(() {
-        if (!mounted) return;
         if (_tabController.indexIsChanging) {
           setState(() {
             _selectedIndex = _tabController.index;
@@ -63,7 +64,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         child: BlocBuilder<CategoryCubit, List<CategoryDto>>(
           builder: (context, state) {
             if (state.isEmpty) {
-              return const SizedBox();
+              return const AppCircularProgressIndicator();
             }
             return Scaffold(
               body: CustomScrollView(
@@ -78,6 +79,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         _tabController.animateTo(
                           index,
                         );
+                        context
+                            .read<ExercisesCubit>()
+                            .getExercise(state[index].ID);
                       },
                       isScrollable: true,
                       overlayColor:
@@ -102,12 +106,76 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     ),
                   ),
                   SliverFillRemaining(
-                    child: TabBarView(
-                      controller: _tabController,
-                      children: List.generate(
-                        state.length,
-                        (index) => Text('${state[index].Name}'),
-                      ),
+                    child: BlocBuilder<ExercisesCubit,
+                        List<(CategoryDto, ExerciseDto)>>(
+                      builder: (context, state) {
+                        if (state.isEmpty) {
+                          return const AppCircularProgressIndicator();
+                        }
+                        return Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: ListView.separated(
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(
+                              height: 20.0,
+                            ),
+                            itemCount: state.length,
+                            itemBuilder: (context, index) {
+                              final itemName = state[index].$2.name;
+                              return GestureDetector(
+                                onTap: () =>
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                  Common.appSnackBar(
+                                      'Navigates to details screen.'),
+                                ),
+                                child: Container(
+                                  padding: const EdgeInsets.all(10.0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    color: const Color(0xff1e2021),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Flexible(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color:
+                                                Colors.green.withOpacity(0.8),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                          height: 100,
+                                          width: 100,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10.0),
+                                      Flexible(
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              itemName,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineMedium,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            Text(
+                                              "Some workout description here would be nice.",
+                                            ),
+                                          ],
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                              // return Text(state[index].$2.name);
+                            },
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
