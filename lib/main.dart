@@ -12,6 +12,7 @@ import 'package:power_lift/screens/bottom_navigation_bar.dart';
 import 'package:power_lift/screens/home/home_page.dart';
 import 'package:power_lift/screens/home/state/category_cubit.dart';
 import 'package:power_lift/screens/home/state/exercises_cubit.dart';
+import 'package:power_lift/screens/home/state/tab_controller_cubit.dart';
 import 'package:power_lift/screens/login/token_interceptor.dart';
 import 'package:power_lift/screens/login/login_page.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
@@ -144,6 +145,9 @@ Future<void> _setUpBlocsAndCubits() async {
       getIt.get(),
     ),
   );
+  getIt.registerFactory(
+    () => TabControllerCubit(),
+  );
 }
 
 Future<void> _setUp() async {
@@ -191,7 +195,10 @@ class PowerLiftApp extends StatelessWidget {
           create: (context) => getIt<CategoryCubit>()..getCategories(),
         ),
         BlocProvider(
-          create: (context) => getIt<ExercisesCubit>(),
+          create: (context) => getIt<ExercisesCubit>()..getExercise(1),
+        ),
+        BlocProvider(
+          create: (context) => getIt<TabControllerCubit>(),
         )
       ],
       child: MaterialApp.router(

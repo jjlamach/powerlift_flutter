@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:power_lift/main.dart';
 import 'package:power_lift/models/exerciseDto/category_dto.dart';
 import 'package:power_lift/repository/power_lift_api_impl.dart';
 
@@ -13,5 +14,11 @@ class CategoryCubit extends Cubit<List<CategoryDto>> {
     } else {
       emit([]);
     }
+  }
+
+  @override
+  void onChange(Change<List<CategoryDto>> change) {
+    super.onChange(change);
+    kLogger.i(change);
   }
 }
