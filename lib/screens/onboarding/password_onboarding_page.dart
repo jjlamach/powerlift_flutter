@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -8,6 +9,7 @@ import 'package:power_lift/utils/common.dart';
 import 'package:power_lift/utils/routes.dart';
 import 'package:power_lift/utils/strings.dart';
 
+@RoutePage()
 class PasswordOnboardingPage extends StatelessWidget {
   const PasswordOnboardingPage({super.key});
 
@@ -48,8 +50,10 @@ class PasswordOnboardingPage extends StatelessWidget {
                           ScaffoldMessenger.of(context).showSnackBar(
                               Common.appSnackBar('Password field is required'));
                         } else {
-                          GoRouter.of(context)
-                              .push(Routes.onboardingConfirmPassword);
+                          // GoRouter.of(context)
+                          //     .push(Routes.onboardingConfirmPassword);
+                          AutoRouter.of(context)
+                              .pushNamed(Routes.onboardingConfirmPassword);
                         }
                       },
                       child: const Text("Next"),

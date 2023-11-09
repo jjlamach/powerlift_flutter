@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +10,7 @@ import 'package:power_lift/utils/common.dart';
 import 'package:power_lift/utils/routes.dart';
 import 'package:power_lift/utils/strings.dart';
 
+@RoutePage()
 class EmailOnboardingPage extends StatelessWidget {
   const EmailOnboardingPage({super.key});
 
@@ -52,7 +54,9 @@ class EmailOnboardingPage extends StatelessWidget {
                           ScaffoldMessenger.of(context).showSnackBar(
                               Common.appSnackBar('Not a valid email.'));
                         } else {
-                          GoRouter.of(context).push(Routes.onboardingPassword);
+                          // GoRouter.of(context).push(Routes.onboardingPassword);
+                          AutoRouter.of(context)
+                              .pushNamed(Routes.onboardingPassword);
                         }
                       },
                       child: const Text("Next"),

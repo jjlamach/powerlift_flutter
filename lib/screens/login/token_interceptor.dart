@@ -15,6 +15,13 @@ class TokenInterceptor extends Interceptor {
   }
 
   @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    // TODO: implement onResponse
+    super.onResponse(response, handler);
+    kLogger.i('RESPONSE CALLED');
+  }
+
+  @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     super.onError(err, handler);
     if (err.response?.statusCode == 401) {

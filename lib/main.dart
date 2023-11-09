@@ -3,30 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logger/logger.dart';
 import 'package:power_lift/repository/power_lift_api.dart';
 import 'package:power_lift/repository/power_lift_api_impl.dart';
-import 'package:power_lift/screens/bottom_navigation_bar.dart';
-import 'package:power_lift/screens/home/home_page.dart';
 import 'package:power_lift/screens/home/state/category_cubit.dart';
 import 'package:power_lift/screens/home/state/exercises_cubit.dart';
 import 'package:power_lift/screens/home/state/tab_controller_cubit.dart';
-import 'package:power_lift/screens/login/token_interceptor.dart';
-import 'package:power_lift/screens/login/login_page.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
-import 'package:power_lift/screens/onboarding/confirm_password_onboarding_page.dart';
-import 'package:power_lift/screens/onboarding/email_onboarding_page.dart';
-import 'package:power_lift/screens/onboarding/full_name_onboarding_page.dart';
-import 'package:power_lift/screens/onboarding/password_onboarding_page.dart';
+import 'package:power_lift/screens/login/token_interceptor.dart';
 import 'package:power_lift/screens/onboarding/state/onboarding_cubit.dart';
-import 'package:power_lift/screens/onboarding/username_onboarding_page.dart';
-import 'package:power_lift/screens/register/register_page.dart';
-import 'package:power_lift/screens/settings/app_settings.dart';
-import 'package:power_lift/screens/splashscreen/get_started_page.dart';
-import 'package:power_lift/screens/splashscreen/splashscreen_page.dart';
-import 'package:power_lift/utils/routes.dart';
+
+import 'app_router.dart';
 
 // logger
 final kLogger = Logger(
@@ -37,74 +25,7 @@ final kLogger = Logger(
   ),
 );
 
-// Navigation
-final _goRouter = GoRouter(
-  redirect: (context, state) {
-    final authState = context.read<AuthBloc>().state;
-    return authState.whenOrNull(
-      loggedIn: (_, __) => Routes.index, // Triggered by AppStarted Event
-      registered: (uid) => Routes.login,
-    );
-  },
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const SplashScreenPage(),
-    ),
-    GoRoute(
-      path: '/index',
-      builder: (context, state) => const AppBottomNavigationBar(),
-      routes: [
-        GoRoute(
-          path: 'home',
-          pageBuilder: (context, state) => MaterialPage(
-            key: state.pageKey,
-            child: const HomePage(),
-          ),
-        ),
-        GoRoute(
-          path: 'app-settings',
-          pageBuilder: (context, state) => MaterialPage(
-            key: state.pageKey,
-            child: const AppSettings(),
-          ),
-        )
-      ],
-    ),
-    GoRoute(
-      path: '/get-started',
-      builder: (context, state) => const GetStartedPage(),
-    ),
-    GoRoute(
-      path: '/login',
-      builder: (context, state) => const LoginPage(),
-    ),
-    GoRoute(
-      path: '/register',
-      builder: (context, state) => const RegisterPage(),
-    ),
-    GoRoute(
-      path: '/onboarding-email',
-      builder: (context, state) => const EmailOnboardingPage(),
-    ),
-    GoRoute(
-      path: '/onboarding-password',
-      builder: (context, state) => const PasswordOnboardingPage(),
-    ),
-    GoRoute(
-      path: '/onboarding-confirm-password',
-      builder: (context, state) => const ConfirmPasswordOnboardingPage(),
-    ),
-    GoRoute(
-      path: '/onboarding-username',
-      builder: (context, state) => const UsernameOnboardingPage(),
-    ),
-    GoRoute(
-      path: '/onboarding-fullName',
-      builder: (context, state) => const FullNameOnboardingPage(),
-    ),
-  ],
-);
+final _appRouter = AppRouter();
 
 // Service locator
 final getIt = GetIt.instance;
@@ -202,7 +123,7 @@ class PowerLiftApp extends StatelessWidget {
         )
       ],
       child: MaterialApp.router(
-        routerConfig: _goRouter,
+        routerConfig: _appRouter.config(),
         title: 'PowerLift',
         theme: ThemeData(
           useMaterial3: true,

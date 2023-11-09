@@ -1,8 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:power_lift/screens/login/state/auth_bloc.dart';
 import 'package:power_lift/utils/routes.dart';
 import 'package:power_lift/utils/strings.dart';
 
+@RoutePage()
 class SplashScreenPage extends StatefulWidget {
   const SplashScreenPage({super.key});
 
@@ -14,8 +17,14 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   @override
   void initState() {
     super.initState();
+    final state = context.read<AuthBloc>().state;
     Future.delayed(const Duration(seconds: 2)).then(
-      (value) => context.replace(Routes.getStarted),
+      (value) {
+        state.whenOrNull(
+          appStarted: () => AutoRouter.of(context).replaceNamed(Routes.index),
+          // loggedOut: () => AutoRouter.of(context).replaceNamed(Routes.login),
+        );
+      },
     );
   }
 

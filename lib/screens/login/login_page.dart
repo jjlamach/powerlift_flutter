@@ -1,11 +1,15 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:power_lift/app_router.dart';
+import 'package:power_lift/main.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
 import 'package:power_lift/utils/common.dart';
 import 'package:power_lift/utils/routes.dart';
 import 'package:power_lift/utils/strings.dart';
 
+@RoutePage()
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -41,7 +45,10 @@ class _LoginPageState extends State<LoginPage> {
       listener: (context, state) {
         state.whenOrNull(
           loggedIn: (_, __) {
-            GoRouter.of(context).go(Routes.index);
+            // GoRouter.of(context).go(Routes.index);
+            AutoRouter.of(context).replaceAll([
+              AppBottomNavigationBarRoute(),
+            ]);
           },
           error: (error) {
             ScaffoldMessenger.of(context).showSnackBar(

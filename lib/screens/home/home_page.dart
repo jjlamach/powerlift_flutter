@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:power_lift/models/exerciseDto/category_dto.dart';
 import 'package:power_lift/models/exerciseDto/exercise_dto.dart';
 import 'package:power_lift/screens/home/state/category_cubit.dart';
@@ -9,6 +11,7 @@ import 'package:power_lift/screens/home/widgets/home_page_app_bar_view.dart';
 import 'package:power_lift/screens/home/widgets/tab_body_view.dart';
 import 'package:power_lift/utils/app_circular_progress_indicator.dart';
 
+@RoutePage()
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -25,6 +28,17 @@ class HomePage extends StatelessWidget {
             length: categories,
             initialIndex: context.read<TabControllerCubit>().state,
             child: Scaffold(
+              floatingActionButton: FloatingActionButton(
+                shape: const CircleBorder(),
+                onPressed: () {
+                  GoRouter.of(context).go('/add-workout');
+                },
+                child: Icon(
+                  Icons.add,
+                  size: 30,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
               appBar: AppBar(
                 toolbarHeight: 200,
                 flexibleSpace: const HomePageAppBarView(),

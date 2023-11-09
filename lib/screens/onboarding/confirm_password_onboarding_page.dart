@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -7,6 +8,7 @@ import 'package:power_lift/utils/common.dart';
 import 'package:power_lift/utils/routes.dart';
 import 'package:power_lift/utils/strings.dart';
 
+@RoutePage()
 class ConfirmPasswordOnboardingPage extends StatelessWidget {
   const ConfirmPasswordOnboardingPage({super.key});
 
@@ -95,7 +97,9 @@ class ConfirmPasswordOnboardingPage extends StatelessWidget {
                           ScaffoldMessenger.of(context).showSnackBar(
                               Common.appSnackBar('Passwords do not match.'));
                         } else {
-                          GoRouter.of(context).push(Routes.onboardingUsername);
+                          // GoRouter.of(context).push(Routes.onboardingUsername);
+                          AutoRouter.of(context)
+                              .pushNamed(Routes.onboardingUsername);
                         }
                       },
                       child: const Text("Next"),

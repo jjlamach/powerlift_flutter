@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
-import 'package:power_lift/screens/settings/app_settings.dart';
+import 'package:power_lift/screens/settings/app_settings_page.dart';
 import 'package:power_lift/utils/common.dart';
 import 'package:power_lift/utils/routes.dart';
 import 'package:power_lift/utils/strings.dart';

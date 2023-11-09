@@ -1,21 +1,20 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:power_lift/screens/home/home_page.dart';
-import 'package:power_lift/screens/settings/app_settings.dart';
+import 'package:power_lift/screens/settings/app_settings_page.dart';
 import 'package:power_lift/utils/dimen.dart';
-import 'package:power_lift/utils/routes.dart';
 
-import 'login/state/auth_bloc.dart';
-
-class AppBottomNavigationBar extends StatefulWidget {
-  const AppBottomNavigationBar({super.key});
+@RoutePage()
+class AppBottomNavigationBarPage extends StatefulWidget {
+  const AppBottomNavigationBarPage({super.key});
 
   @override
-  State<AppBottomNavigationBar> createState() => _AppBottomNavigationBarState();
+  State<AppBottomNavigationBarPage> createState() =>
+      _AppBottomNavigationBarPageState();
 }
 
-class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
+class _AppBottomNavigationBarPageState
+    extends State<AppBottomNavigationBarPage> {
   int currentPageIndex = 0;
 
   @override
@@ -31,7 +30,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
           alignment: Alignment.center,
           child: const Text('Social'),
         ),
-        const AppSettings(),
+        const AppSettingsPage(),
       ][currentPageIndex],
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {

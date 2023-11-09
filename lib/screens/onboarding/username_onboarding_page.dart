@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -8,6 +9,7 @@ import 'package:power_lift/utils/common.dart';
 import 'package:power_lift/utils/routes.dart';
 import 'package:power_lift/utils/strings.dart';
 
+@RoutePage()
 class UsernameOnboardingPage extends StatelessWidget {
   const UsernameOnboardingPage({super.key});
 
@@ -48,7 +50,9 @@ class UsernameOnboardingPage extends StatelessWidget {
                           ScaffoldMessenger.of(context).showSnackBar(
                               Common.appSnackBar('Username field is required'));
                         } else {
-                          GoRouter.of(context).push(Routes.onboardingFullname);
+                          // GoRouter.of(context).push(Routes.onboardingFullname);
+                          AutoRouter.of(context)
+                              .pushNamed(Routes.onboardingFullname);
                         }
                       },
                       child: const Text("Next"),
