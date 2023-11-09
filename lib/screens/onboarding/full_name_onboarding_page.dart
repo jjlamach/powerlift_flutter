@@ -1,13 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:power_lift/app_router.dart';
 import 'package:power_lift/models/onboardinguser/onboarding_user.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
 import 'package:power_lift/screens/onboarding/state/onboarding_cubit.dart';
 import 'package:power_lift/screens/onboarding/widgets/onboarding_full_name_text_field.dart';
 import 'package:power_lift/utils/common.dart';
-import 'package:power_lift/utils/routes.dart';
 import 'package:power_lift/utils/strings.dart';
 
 @RoutePage()
@@ -46,7 +45,7 @@ class FullNameOnboardingPage extends StatelessWidget {
                       listener: (context, state) {
                         state.whenOrNull(
                           registered: (uid) =>
-                              GoRouter.of(context).go(Routes.login),
+                              AutoRouter.of(context).replace(LoginRoute()),
                           error: (error) =>
                               ScaffoldMessenger.of(context).showSnackBar(
                             Common.appSnackBar(

@@ -1,12 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:power_lift/app_router.dart';
 import 'package:power_lift/models/onboardinguser/onboarding_user.dart';
 import 'package:power_lift/screens/onboarding/state/onboarding_cubit.dart';
 import 'package:power_lift/screens/onboarding/widgets/onboarding_username_text_field.dart';
 import 'package:power_lift/utils/common.dart';
-import 'package:power_lift/utils/routes.dart';
 import 'package:power_lift/utils/strings.dart';
 
 @RoutePage()
@@ -52,7 +51,7 @@ class UsernameOnboardingPage extends StatelessWidget {
                         } else {
                           // GoRouter.of(context).push(Routes.onboardingFullname);
                           AutoRouter.of(context)
-                              .pushNamed(Routes.onboardingFullname);
+                              .push(FullNameOnboardingRoute());
                         }
                       },
                       child: const Text("Next"),
