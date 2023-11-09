@@ -62,7 +62,6 @@ class GetStartedPage extends StatelessWidget {
                                 ),
                               ),
                       onPressed: () {
-                        // GoRouter.of(context).push(Routes.onboardingEmail);
                         AutoRouter.of(context)
                             .pushNamed(Routes.onboardingEmail);
                       },

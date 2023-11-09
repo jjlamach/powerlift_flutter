@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:power_lift/app_router.dart';
 import 'package:power_lift/models/exerciseDto/category_dto.dart';
 import 'package:power_lift/models/exerciseDto/exercise_dto.dart';
 import 'package:power_lift/screens/home/state/category_cubit.dart';
@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
               floatingActionButton: FloatingActionButton(
                 shape: const CircleBorder(),
                 onPressed: () {
-                  GoRouter.of(context).go('/add-workout');
+                  AutoRouter.of(context).push(const AddWorkoutRoute());
                 },
                 child: Icon(
                   Icons.add,
