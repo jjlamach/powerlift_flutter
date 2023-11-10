@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:power_lift/app_router.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
 import 'package:power_lift/utils/common.dart';
 import 'package:power_lift/utils/strings.dart';
@@ -36,7 +38,7 @@ class HomePageAppBarView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Let`s workout!',
+                    Strings.letsWorkOut,
                     style: Theme.of(blocContext)
                         .appBarTheme
                         .titleTextStyle
@@ -47,7 +49,7 @@ class HomePageAppBarView extends StatelessWidget {
                   Common.appCircle(
                     child: IconButton(
                       onPressed: () {
-                        // AutoRouter.of(context).push(AppSettingsRoute());
+                        AutoRouter.of(context).push(const AppSettingsRoute());
                       },
                       icon: const Icon(Icons.settings, size: 30),
                     ),

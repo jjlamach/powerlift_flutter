@@ -5,7 +5,7 @@ class Strings {
   static const String password = 'Password';
   static const String email = 'Email';
   static const String signIn = 'Sign in';
-  static const String appName = 'Powerlift';
+  static const String appName = 'PowerLift';
   static const String dontHaveAnAccountYet = "Don't have an account yet?";
   static const String register = ' Register';
   static const String username = 'Username';
@@ -25,4 +25,19 @@ class Strings {
       'Track gains, explore routines, and connect with peers. Every rep and graph counts';
   static const String bicep = '💪';
   static const String logIn = 'Log In';
+  static const String yes = 'Yes';
+  static const String no = 'No';
+  static const String letsWorkOut = 'Let`s workout!';
+  static const String developers = 'Developers';
+  static const String micah = 'Micah Kimel';
+  static const String julio = 'Julio Lama';
+  static const String licenses = 'Licenses';
+  static const String logOut = 'Log out';
+  static const String areYouSureYouWantLogOut =
+      'Are you sure you want to log out?';
+  static const String appVersion = '1.0';
+  static const String settings = 'Settings';
+  static const String notifications = 'Notifications';
+  static const String deleteAccount = 'Delete\nAccount';
+  static const String contact = 'Contact';
 }

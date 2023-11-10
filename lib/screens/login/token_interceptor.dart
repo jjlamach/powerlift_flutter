@@ -17,11 +17,17 @@ class TokenInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     super.onError(err, handler);
-    if (err.response?.statusCode == 401) {
-      kLogger.e('Token expired. Log in again.');
-      await storage.delete('token');
-      await storage.delete('username');
-      getIt.get<AuthBloc>().add(const AuthEvent.logOut());
-    }
+    kLogger.e('Error. Sign in again.');
+    await storage.delete('token');
+    await storage.delete('username');
+    getIt.get<AuthBloc>().add(const AuthEvent.logOut());
+    // if (err.response?.statusCode == 401) {
+    //   kLogger.e('Token expired. Log in again.');
+    //   await storage.delete('token');
+    //   await storage.delete('username');
+    //   getIt.get<AuthBloc>().add(const AuthEvent.logOut());
+    // } else {
+    //   getIt.get<AuthBloc>().add(const AuthEvent.logOut());
+    // }
   }
 }
