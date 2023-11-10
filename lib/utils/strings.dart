@@ -40,4 +40,10 @@ class Strings {
   static const String notifications = 'Notifications';
   static const String deleteAccount = 'Delete\nAccount';
   static const String contact = 'Contact';
+  static const String profile = 'Profile';
+  static const String profileInformation = 'Profile Information';
+  static const String name = 'Name';
+  static const String myWorkouts = 'My Workouts';
+  static const String showAll = 'Show all';
+  static const String saveChanges = 'Save changes';
 }

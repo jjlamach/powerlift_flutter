@@ -1,34 +1,18 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:power_lift/utils/common.dart';
+import 'package:power_lift/utils/strings.dart';
 
 @RoutePage()
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
-
-  //Center(
-  //         child: BlocListener<AuthBloc, AuthState>(
-  //           listener: (context, state) {
-  //             state.whenOrNull(
-  //               loggedOut: () =>
-  //                   AutoRouter.of(context).replace(GetStartedRoute()),
-  //             );
-  //           },
-  //           child: TextButton(
-  //             onPressed: () => {
-  //               context.read<AuthBloc>().add(AuthEvent.logOut()),
-  //             },
-  //             child: Text("Log out"),
-  //           ),
-  //         ),
-  //       ),
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Profile"),
+        title: const Text(Strings.profile),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
@@ -58,7 +42,7 @@ class ProfilePage extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Profile Information",
+                    Strings.profileInformation,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -71,21 +55,23 @@ class ProfilePage extends StatelessWidget {
                     child: Column(
                       children: [
                         TextFormField(
+                          readOnly: true,
                           cursorColor: Colors.white,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintStyle: TextStyle(
                               color: Colors.white,
                             ),
                             filled: false,
-                            hintText: "Name",
+                            hintText: Strings.name,
                           ),
                         ),
                         const SizedBox(height: 20.0),
                         TextFormField(
+                          readOnly: true,
                           cursorColor: Colors.white,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             filled: false,
-                            hintText: "Username",
+                            hintText: Strings.username,
                             hintStyle: TextStyle(
                               color: Colors.white,
                             ),
@@ -93,10 +79,11 @@ class ProfilePage extends StatelessWidget {
                         ),
                         const SizedBox(height: 20.0),
                         TextFormField(
+                          readOnly: true,
                           cursorColor: Colors.white,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             filled: false,
-                            hintText: "Email",
+                            hintText: Strings.email,
                             hintStyle: TextStyle(
                               color: Colors.white,
                             ),
@@ -112,7 +99,7 @@ class ProfilePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "My workouts",
+                      Strings.myWorkouts,
                       style:
                           Theme.of(context).textTheme.headlineSmall?.copyWith(
                                 fontWeight: FontWeight.bold,
@@ -122,7 +109,7 @@ class ProfilePage extends StatelessWidget {
                       onTap: () => ScaffoldMessenger.of(context).showSnackBar(
                           Common.appSnackBar('View all workouts screen')),
                       child: Text(
-                        "Show all",
+                        Strings.showAll,
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
@@ -147,7 +134,7 @@ class ProfilePage extends StatelessWidget {
                   width: double.infinity,
                   child: OutlinedButton(
                     onPressed: () {},
-                    child: Text("Save changes"),
+                    child: const Text(Strings.saveChanges),
                   ),
                 ),
               ],
