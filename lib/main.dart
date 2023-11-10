@@ -168,11 +168,8 @@ class PowerLiftApp extends StatelessWidget {
           ),
           textButtonTheme: TextButtonThemeData(
             style: ButtonStyle(
-              backgroundColor: const MaterialStatePropertyAll(
-                Color(0xffa3ec3f),
-              ),
-              padding: const MaterialStatePropertyAll(
-                EdgeInsets.symmetric(horizontal: 100),
+              backgroundColor: MaterialStatePropertyAll(
+                Colors.transparent,
               ),
               shape: MaterialStatePropertyAll(
                 RoundedRectangleBorder(
@@ -191,36 +188,31 @@ class PowerLiftApp extends StatelessWidget {
               ),
             ),
           ),
-          inputDecorationTheme: InputDecorationTheme(
+          inputDecorationTheme: const InputDecorationTheme(
             filled: true,
-            hintStyle: const TextStyle(
+            hintStyle: TextStyle(
               color: Colors.black,
             ),
-            fillColor: Colors.white,
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20.0),
-              borderSide: const BorderSide(
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
                 width: 2.0,
                 color: Color(0xffa3ec3f),
               ),
             ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20.0),
-              borderSide: const BorderSide(
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
                 width: 2.0,
                 color: Color(0xffa3ec3f),
               ),
             ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20.0),
-              borderSide: const BorderSide(
+            errorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
                 width: 2.0,
                 color: Colors.redAccent,
               ),
             ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20.0),
-              borderSide: const BorderSide(
+            focusedErrorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
                 width: 2.0,
                 color: Colors.redAccent,
               ),
@@ -240,6 +232,9 @@ class PowerLiftApp extends StatelessWidget {
           snackBarTheme: SnackBarThemeData(
             backgroundColor: const Color(0xffa3ec3f).withOpacity(0.7),
             actionTextColor: Colors.white,
+          ),
+          dialogTheme: DialogTheme(
+            backgroundColor: const Color(0xff1e2021),
           ),
         ),
       ),

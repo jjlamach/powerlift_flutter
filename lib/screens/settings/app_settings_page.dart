@@ -1,9 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:power_lift/screens/login/state/auth_bloc.dart';
-import 'package:power_lift/utils/routes.dart';
 
 @RoutePage()
 class AppSettingsPage extends StatelessWidget {
@@ -12,23 +8,54 @@ class AppSettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: BlocListener<AuthBloc, AuthState>(
-          listener: (context, state) {
-            state.whenOrNull(
-              loggedOut: () =>
-                  AutoRouter.of(context).replaceNamed(Routes.getStarted),
-            );
-          },
-          child: TextButton(
-            onPressed: () {
-              context.read<AuthBloc>().add(AuthEvent.logOut());
-            },
-            child: Text("Log Out"),
-          ),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Settings"),
+      ),
+      body: GridView.builder(
+        itemCount: 4,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+        ),
+        itemBuilder: (context, index) => Card(
+          child: Text("About this app"),
         ),
       ),
+      // body: Center(
+      //   child: Card(
+      //     child: SizedBox(
+      //       width: double.infinity,
+      //       height: MediaQuery.of(context).size.height * 0.3,
+      //       child: Column(
+      //         children: [
+      //           TextButton(
+      //               onPressed: () {
+      //                 showAboutDialog(
+      //                   applicationName: "PowerLift",
+      //                   applicationVersion: "1.0",
+      //                   context: context,
+      //                 );
+      //               },
+      //               child: Text("About this app")),
+      //           BlocListener<AuthBloc, AuthState>(
+      //             listener: (context, state) {
+      //               state.whenOrNull(
+      //                 loggedOut: () => AutoRouter.of(context)
+      //                     .replaceNamed(Routes.getStarted),
+      //               );
+      //             },
+      //             child: TextButton(
+      //               onPressed: () {
+      //                 context.read<AuthBloc>().add(AuthEvent.logOut());
+      //               },
+      //               child: Text("Log Out"),
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

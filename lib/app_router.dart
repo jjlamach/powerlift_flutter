@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:power_lift/addworkout/add_workout_page.dart';
+import 'package:power_lift/screens/addworkout/add_workout_page.dart';
 import 'package:power_lift/screens/bottom_navigation_bar_page.dart';
 import 'package:power_lift/screens/feed/feed_page.dart';
 import 'package:power_lift/screens/home/home_page.dart';
@@ -60,10 +60,6 @@ class AppRouter extends _$AppRouter {
               path: "profile",
               page: ProfileRoute.page,
             ),
-            AutoRoute(
-              path: "app-settings",
-              page: AppSettingsRoute.page,
-            ),
           ],
         ),
         AutoRoute(
@@ -94,6 +90,13 @@ class AppRouter extends _$AppRouter {
         AutoRoute(
           path: "/onboarding-fullName",
           page: FullNameOnboardingRoute.page,
-        )
+        ),
+        AutoRoute(
+          path: "/app-settings",
+          guards: [
+            AuthGuard(),
+          ],
+          page: AppSettingsRoute.page,
+        ),
       ];
 }
