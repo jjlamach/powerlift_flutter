@@ -44,13 +44,17 @@ class FullNameOnboardingPage extends StatelessWidget {
                     child: BlocListener<AuthBloc, AuthState>(
                       listener: (context, state) {
                         state.whenOrNull(
-                          registered: (uid) =>
-                              AutoRouter.of(context).replace(LoginRoute()),
-                          error: (error) =>
-                              ScaffoldMessenger.of(context).showSnackBar(
-                            Common.appSnackBar(
-                                'Could not create account. Contact support.'),
-                          ),
+                          registered: (uid) => AutoRouter.of(context)
+                              .replace(const LoginRoute()),
+                          error: (error) {
+                            AutoRouter.of(context).replaceAll([
+                              const GetStartedRoute(),
+                            ]);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              Common.appSnackBar(
+                                  'Could not create account. Contact support.'),
+                            );
+                          },
                         );
                       },
                       child: OutlinedButton(
