@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:power_lift/app_router.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
+import 'package:power_lift/screens/settings/state/delete_user_cubit.dart';
+import 'package:power_lift/utils/common.dart';
 import 'package:power_lift/utils/strings.dart';
 
 @RoutePage()
@@ -11,16 +13,34 @@ class AppSettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) {
-        state.whenOrNull(
-          loggedOut: () => AutoRouter.of(context).replaceAll(
-            [
-              const GetStartedRoute(),
-            ],
-          ),
-        );
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AuthBloc, AuthState>(
+          listener: (context, state) {
+            state.whenOrNull(
+              loggedOut: () => AutoRouter.of(context).replaceAll(
+                [
+                  const GetStartedRoute(),
+                ],
+              ),
+            );
+          },
+        ),
+        BlocListener<DeleteUserCubit, bool>(
+          listener: (context, state) {
+            if (state) {
+              AutoRouter.of(context).replaceAll(
+                [
+                  const GetStartedRoute(),
+                ],
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  Common.appSnackBar('Could not delete account.'));
+            }
+          },
+        )
+      ],
       child: Scaffold(
         bottomSheet: BottomAppBar(
           height: 100,
@@ -163,23 +183,53 @@ class AppSettingsPage extends StatelessWidget {
                   ],
                 ),
               ),
-              Card(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                      Strings.deleteAccount,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: () => showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text(Strings.deleteAccountDialog),
+                    icon: const Icon(Icons.person_off_outlined),
+                    content: Text(
+                      Strings.areYouSureDeleteAccount,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    actionsAlignment: MainAxisAlignment.center,
+                    actions: [
+                      TextButton(
+                        onPressed: () => AutoRouter.of(context).pop(),
+                        child: Text(
+                          Strings.no,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.secondary,
                           ),
-                    ),
-                    Icon(
-                      Icons.person_off_outlined,
-                      size: 50.0,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ],
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () =>
+                            context.read<DeleteUserCubit>().deleteUser(),
+                        child: const Text(Strings.yes),
+                      ),
+                    ],
+                  ),
+                ),
+                child: Card(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        Strings.deleteAccount,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      Icon(
+                        Icons.person_off_outlined,
+                        size: 50.0,
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Card(

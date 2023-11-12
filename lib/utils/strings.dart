@@ -46,4 +46,7 @@ class Strings {
   static const String myWorkouts = 'My Workouts';
   static const String showAll = 'Show all';
   static const String saveChanges = 'Save changes';
+  static const String areYouSureDeleteAccount =
+      'Are you sure you want to delete your account?\nAll your data including your workout graphs will be lost.';
+  static const String deleteAccountDialog = 'Delete Account';
 }

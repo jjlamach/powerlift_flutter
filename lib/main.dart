@@ -14,6 +14,7 @@ import 'package:power_lift/screens/login/state/auth_bloc.dart';
 import 'package:power_lift/screens/login/token_interceptor.dart';
 import 'package:power_lift/screens/onboarding/state/onboarding_cubit.dart';
 import 'package:power_lift/screens/onboarding/state/password_viewer_cubit.dart';
+import 'package:power_lift/screens/settings/state/delete_user_cubit.dart';
 
 import 'app_router.dart';
 
@@ -73,6 +74,11 @@ Future<void> _setUpBlocsAndCubits() async {
   getIt.registerFactory(
     () => PasswordViewerCubit(),
   );
+  getIt.registerFactory(
+    () => DeleteUserCubit(
+      getIt.get(),
+    ),
+  );
 }
 
 Future<void> _setUp() async {
@@ -127,7 +133,10 @@ class PowerLiftApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => getIt<PasswordViewerCubit>(),
-        )
+        ),
+        BlocProvider(
+          create: (context) => getIt<DeleteUserCubit>(),
+        ),
       ],
       child: MaterialApp.router(
         routerConfig: _appRouter.config(),
@@ -175,7 +184,7 @@ class PowerLiftApp extends StatelessWidget {
           ),
           textButtonTheme: TextButtonThemeData(
             style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(
+              backgroundColor: const MaterialStatePropertyAll(
                 Colors.transparent,
               ),
               shape: MaterialStatePropertyAll(
