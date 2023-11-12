@@ -23,4 +23,7 @@ abstract class PowerLiftApi {
 
   @GET('/getExerciseType')
   Future<List<ExerciseDto>> exercises();
+
+  @POST('/deleteAccount')
+  Future<int> deleteAccount();
 }

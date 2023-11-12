@@ -23,8 +23,8 @@ class ExercisesCubit extends Cubit<List<(CategoryDto, ExerciseDto)>> {
   Future<List<(CategoryDto, ExerciseDto)>> _createWorkouts() async {
     (CategoryDto, ExerciseDto) record;
     List<(CategoryDto, ExerciseDto)> records = [];
-    final categories = await _repository.getCategories();
-    final exercises = await _repository.getExercisesByCategories();
+    final categories = await _repository.categories();
+    final exercises = await _repository.exercises();
     for (var element in categories) {
       for (var exercise in exercises) {
         if (element.ID == exercise.categoryid?.int32) {

@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 import 'package:power_lift/main.dart';
 import 'package:power_lift/models/createUserDto/create_user.dart';
+import 'package:power_lift/models/loginDto/login_dto.dart';
 import 'package:power_lift/models/userDto/user.dart';
 import 'package:power_lift/repository/power_lift_api_impl.dart';
 import 'package:power_lift/utils/errors.dart';
@@ -35,7 +36,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           },
           logIn: (email, password) async {
             try {
-              final response = await api.login(email, password);
+              LoginDto loginDto = LoginDto(Username: email, Password: password);
+              final response = await api.login(loginDto);
               storage.put('token', response.access_token);
               storage.put('username', response.user.username);
 

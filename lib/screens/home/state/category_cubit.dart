@@ -8,7 +8,7 @@ class CategoryCubit extends Cubit<List<CategoryDto>> {
   CategoryCubit(this._repository) : super([]);
 
   void getCategories() async {
-    final result = await _repository.getCategories();
+    final result = await _repository.categories();
     if (result.isNotEmpty) {
       emit(result);
     } else {
