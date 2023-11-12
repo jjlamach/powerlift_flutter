@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:power_lift/screens/onboarding/state/onboarding_cubit.dart';
+import 'package:power_lift/screens/onboarding/state/password_viewer_cubit.dart';
+import 'package:power_lift/utils/dimen.dart';
 import 'package:power_lift/utils/strings.dart';
 
 class OnboardingPasswordTextField extends StatelessWidget {
@@ -10,7 +12,7 @@ class OnboardingPasswordTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       autofocus: true,
-      obscureText: true,
+      obscureText: context.watch<PasswordViewerCubit>().state,
       autofillHints: const <String>[AutofillHints.oneTimeCode],
       onChanged: (value) => context.read<OnboardingCubit>().passwordTxt(value),
       keyboardType: TextInputType.text,
@@ -21,6 +23,31 @@ class OnboardingPasswordTextField extends StatelessWidget {
       ),
       cursorColor: Theme.of(context).colorScheme.secondary,
       decoration: InputDecoration(
+        suffixIcon: BlocBuilder<PasswordViewerCubit, bool>(
+          builder: (context, state) {
+            if (!state) {
+              return GestureDetector(
+                onTap: () =>
+                    context.read<PasswordViewerCubit>().showPassword(true),
+                child: Icon(
+                  Icons.remove_red_eye,
+                  color: Theme.of(context).colorScheme.secondary,
+                  size: Dimen.iconSize,
+                ),
+              );
+            } else {
+              return GestureDetector(
+                onTap: () =>
+                    context.read<PasswordViewerCubit>().showPassword(false),
+                child: Icon(
+                  Icons.remove_red_eye_outlined,
+                  color: Theme.of(context).colorScheme.secondary,
+                  size: Dimen.iconSize,
+                ),
+              );
+            }
+          },
+        ),
         hintText: Strings.password,
         hintStyle: TextStyle(
           color: Colors.white.withOpacity(0.8),

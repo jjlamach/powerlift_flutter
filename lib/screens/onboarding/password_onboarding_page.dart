@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:power_lift/models/onboardinguser/onboarding_user.dart';
 import 'package:power_lift/screens/onboarding/state/onboarding_cubit.dart';
 import 'package:power_lift/screens/onboarding/widgets/onboarding_password_text_field.dart';
@@ -50,8 +49,6 @@ class PasswordOnboardingPage extends StatelessWidget {
                           ScaffoldMessenger.of(context).showSnackBar(
                               Common.appSnackBar('Password field is required'));
                         } else {
-                          // GoRouter.of(context)
-                          //     .push(Routes.onboardingConfirmPassword);
                           AutoRouter.of(context)
                               .pushNamed(Routes.onboardingConfirmPassword);
                         }
