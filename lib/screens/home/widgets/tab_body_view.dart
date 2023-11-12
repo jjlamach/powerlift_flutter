@@ -4,26 +4,33 @@ import 'package:power_lift/models/exerciseDto/exercise_dto.dart';
 import 'package:power_lift/utils/app_circular_progress_indicator.dart';
 import 'package:power_lift/utils/common.dart';
 
-class TabBodyView extends StatelessWidget {
+class TabBodyView extends StatefulWidget {
   final List<(CategoryDto, ExerciseDto)> workouts;
-  final PageStorageKey _key = const PageStorageKey('key');
   const TabBodyView({required this.workouts, super.key});
 
   @override
+  State<TabBodyView> createState() => _TabBodyViewState();
+}
+
+// Keeps the state of each tabBodyView alive when off screen
+class _TabBodyViewState extends State<TabBodyView>
+    with AutomaticKeepAliveClientMixin<TabBodyView> {
+  @override
   Widget build(BuildContext context) {
-    if (workouts.isEmpty) {
+    super.build(context);
+    if (widget.workouts.isEmpty) {
       return const AppCircularProgressIndicator();
     }
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: ListView.separated(
-        key: _key,
+        // key: _key,
         separatorBuilder: (context, index) => const SizedBox(
           height: 20.0,
         ),
-        itemCount: workouts.length,
+        itemCount: widget.workouts.length,
         itemBuilder: (context, index) {
-          final itemName = workouts[index].$2.name;
+          final itemName = widget.workouts[index].$2.name;
           return GestureDetector(
             onTap: () => ScaffoldMessenger.of(context).showSnackBar(
               Common.appSnackBar('Navigates to details screen.'),
@@ -70,4 +77,7 @@ class TabBodyView extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

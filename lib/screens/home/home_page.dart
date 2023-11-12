@@ -61,7 +61,9 @@ class HomePage extends StatelessWidget {
                             color: tabState == index
                                 ? Theme.of(context).colorScheme.secondary
                                 : const Color(0xff191919),
-                            borderRadius: BorderRadius.circular(20.0),
+                            borderRadius: BorderRadius.circular(
+                              20.0,
+                            ),
                           ),
                           child: Tab(
                             text:
@@ -78,7 +80,9 @@ class HomePage extends StatelessWidget {
                 builder: (context, _) => TabBarView(
                   children: List.generate(
                     state.length,
-                    (index) => TabBodyView(workouts: _),
+                    (index) => TabBodyView(
+                      workouts: _,
+                    ),
                   ),
                 ),
               ),
