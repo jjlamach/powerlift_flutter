@@ -1,12 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:power_lift/app_router.dart';
-import 'package:power_lift/main.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
 import 'package:power_lift/utils/common.dart';
-import 'package:power_lift/utils/routes.dart';
 import 'package:power_lift/utils/strings.dart';
 
 @RoutePage()
@@ -45,9 +42,8 @@ class _LoginPageState extends State<LoginPage> {
       listener: (context, state) {
         state.whenOrNull(
           loggedIn: (_, __) {
-            // GoRouter.of(context).go(Routes.index);
             AutoRouter.of(context).replaceAll([
-              AppBottomNavigationBarRoute(),
+              const AppBottomNavigationBarRoute(),
             ]);
           },
           error: (error) {
@@ -61,6 +57,7 @@ class _LoginPageState extends State<LoginPage> {
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: Scaffold(
           appBar: AppBar(
+            centerTitle: true,
             title: const Text(Strings.logIn),
           ),
           body: Form(
@@ -146,15 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                               return null;
                             },
                             onFieldSubmitted: (value) {
-                              final isValid = _formKey.currentState?.validate();
-                              if (isValid == true) {
-                                context.read<AuthBloc>().add(
-                                      AuthEvent.logIn(
-                                        _username.text,
-                                        _password.text,
-                                      ),
-                                    );
-                              }
+                              _validateCredentials(context);
                             },
                             autofocus: true,
                             focusNode: passwordFocusNode,
@@ -204,7 +193,16 @@ class _LoginPageState extends State<LoginPage> {
                         )
                       ],
                     ),
-                    const SizedBox(height: 20.0),
+                    const SizedBox(height: 40.0),
+                    SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          _validateCredentials(context);
+                        },
+                        child: const Text(Strings.logIn),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -213,5 +211,17 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  void _validateCredentials(BuildContext context) {
+    final isValid = _formKey.currentState?.validate();
+    if (isValid == true) {
+      context.read<AuthBloc>().add(
+            AuthEvent.logIn(
+              _username.text,
+              _password.text,
+            ),
+          );
+    }
   }
 }
