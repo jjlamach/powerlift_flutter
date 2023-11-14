@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
+import 'package:power_lift/data/services/app_service.dart';
 import 'package:power_lift/main.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
 

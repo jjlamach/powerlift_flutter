@@ -1,27 +1,17 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logger/logger.dart';
-import 'package:power_lift/data/api/power_lift_api.dart';
-import 'package:power_lift/data/repository/power_lift_api_impl.dart';
-import 'package:power_lift/domain/usecase/createuserusecase/create_user_usecase.dart';
-import 'package:power_lift/domain/usecase/deleteuserusecase/delete_user_usecase.dart';
-import 'package:power_lift/domain/usecase/getcategoriesusecase/get_categories_use_case.dart';
-import 'package:power_lift/domain/usecase/getexercisesusecase/getexercisesusecase.dart';
-import 'package:power_lift/domain/usecase/loginusecase/login_use_case.dart';
+import 'package:power_lift/data/services/app_service.dart';
 import 'package:power_lift/screens/home/state/category_cubit.dart';
 import 'package:power_lift/screens/home/state/exercises_cubit.dart';
 import 'package:power_lift/screens/home/state/tab_controller_cubit.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
-import 'package:power_lift/screens/login/token_interceptor.dart';
 import 'package:power_lift/screens/onboarding/state/onboarding_cubit.dart';
 import 'package:power_lift/screens/onboarding/state/password_viewer_cubit.dart';
 import 'package:power_lift/screens/settings/state/delete_user_cubit.dart';
 
-import 'app_router.dart';
+import 'navigation/app_router.dart';
 
 // logger
 final kLogger = Logger(
@@ -33,90 +23,17 @@ final kLogger = Logger(
 );
 
 final _appRouter = AppRouter();
-
-// Service locator
-final getIt = GetIt.instance;
-
-Future<void> _setUpDependencies() async {
-  // Register Dio
-  Dio dio = Dio();
-  dio.interceptors.add(TokenInterceptor());
-  getIt.registerLazySingleton(() => dio);
-
-  // Register PowerLiftApi
-  getIt.registerLazySingleton<PowerLiftApi>(() {
-    final dio = getIt<Dio>();
-    return PowerLiftApi(dio);
-  });
-
-  // Register PowerLiftApiImpl
-  getIt.registerLazySingleton(() {
-    final api = getIt<PowerLiftApi>();
-    return PowerLiftApiImpl(api);
-  });
-}
-
-Future<void> _setUpUseCases() async {
-  getIt.registerFactory(() => LoginUseCase(getIt.get()));
-  getIt.registerFactory(() => CreateUserUseCase(getIt.get()));
-  getIt.registerFactory(() => GetCategoriesUseCase(getIt.get()));
-  getIt.registerFactory(() => GetExercisesUseCase(getIt.get()));
-  getIt.registerFactory(() => DeleteUserUseCase(getIt.get()));
-}
-
-Future<void> _setUpBlocsAndCubits() async {
-  getIt.registerSingleton(
-    AuthBloc(
-      getIt.get(),
-      getIt.get(),
-    ),
-  );
-  getIt.registerFactory(
-    () => OnboardingCubit(),
-  );
-  getIt.registerFactory(
-    () => CategoryCubit(getIt.get()),
-  );
-  getIt.registerFactory(
-    () => ExercisesCubit(
-      getIt.get(),
-      getIt.get(),
-    ),
-  );
-  getIt.registerFactory(
-    () => TabControllerCubit(),
-  );
-  getIt.registerFactory(
-    () => PasswordViewerCubit(),
-  );
-  getIt.registerFactory(
-    () => DeleteUserCubit(
-      getIt.get(),
-    ),
-  );
-}
-
-Future<void> _setUp() async {
-  await _setUpStorage();
-  await _setUpUseCases();
-  await _setUpDependencies();
-  await _setUpBlocsAndCubits();
-}
-
-Future<void> _setUpStorage() async {
-  await Hive.initFlutter();
-  await Hive.openBox('appStorage');
-}
+final _service = AppService();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (value) async {
-      await _setUp().then(
-        (_) => runApp(
-          const PowerLiftApp(),
-        ),
-      );
+      await _service.setUp().then(
+            (_) => runApp(
+              const PowerLiftApp(),
+            ),
+          );
     },
   );
 }

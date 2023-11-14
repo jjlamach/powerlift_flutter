@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:power_lift/app_router.dart';
+import 'package:power_lift/navigation/app_router.dart';
 import 'package:power_lift/utils/dimen.dart';
 
 @RoutePage()
