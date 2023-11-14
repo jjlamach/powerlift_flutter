@@ -1,11 +1,12 @@
+import 'package:power_lift/data/api/power_lift_api.dart';
+import 'package:power_lift/data/createUserDto/create_user.dart';
+import 'package:power_lift/data/exerciseDto/category_dto.dart';
+import 'package:power_lift/data/exerciseDto/exercise_dto.dart';
+import 'package:power_lift/data/loginDto/login_dto.dart';
+import 'package:power_lift/data/userResponseDto/user_response.dart';
 import 'package:power_lift/main.dart';
-import 'package:power_lift/models/createUserDto/create_user.dart';
-import 'package:power_lift/models/exerciseDto/category_dto.dart';
-import 'package:power_lift/models/exerciseDto/exercise_dto.dart';
-import 'package:power_lift/models/loginDto/login_dto.dart';
-import 'package:power_lift/models/userResponseDto/user_response.dart';
-import 'package:power_lift/repository/power_lift_api.dart';
 
+// concrete implementation of the API
 class PowerLiftApiImpl implements PowerLiftApi {
   final PowerLiftApi _api;
 

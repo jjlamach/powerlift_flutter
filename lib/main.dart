@@ -5,8 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logger/logger.dart';
-import 'package:power_lift/repository/power_lift_api.dart';
-import 'package:power_lift/repository/power_lift_api_impl.dart';
+import 'package:power_lift/data/api/power_lift_api.dart';
+import 'package:power_lift/data/repository/power_lift_api_impl.dart';
+import 'package:power_lift/domain/usecase/createuserusecase/create_user_usecase.dart';
+import 'package:power_lift/domain/usecase/deleteuserusecase/delete_user_usecase.dart';
+import 'package:power_lift/domain/usecase/getcategoriesusecase/get_categories_use_case.dart';
+import 'package:power_lift/domain/usecase/getexercisesusecase/getexercisesusecase.dart';
+import 'package:power_lift/domain/usecase/loginusecase/login_use_case.dart';
 import 'package:power_lift/screens/home/state/category_cubit.dart';
 import 'package:power_lift/screens/home/state/exercises_cubit.dart';
 import 'package:power_lift/screens/home/state/tab_controller_cubit.dart';
@@ -51,9 +56,18 @@ Future<void> _setUpDependencies() async {
   });
 }
 
+Future<void> _setUpUseCases() async {
+  getIt.registerFactory(() => LoginUseCase(getIt.get()));
+  getIt.registerFactory(() => CreateUserUseCase(getIt.get()));
+  getIt.registerFactory(() => GetCategoriesUseCase(getIt.get()));
+  getIt.registerFactory(() => GetExercisesUseCase(getIt.get()));
+  getIt.registerFactory(() => DeleteUserUseCase(getIt.get()));
+}
+
 Future<void> _setUpBlocsAndCubits() async {
   getIt.registerSingleton(
     AuthBloc(
+      getIt.get(),
       getIt.get(),
     ),
   );
@@ -65,6 +79,7 @@ Future<void> _setUpBlocsAndCubits() async {
   );
   getIt.registerFactory(
     () => ExercisesCubit(
+      getIt.get(),
       getIt.get(),
     ),
   );
@@ -83,6 +98,7 @@ Future<void> _setUpBlocsAndCubits() async {
 
 Future<void> _setUp() async {
   await _setUpStorage();
+  await _setUpUseCases();
   await _setUpDependencies();
   await _setUpBlocsAndCubits();
 }
@@ -249,8 +265,8 @@ class PowerLiftApp extends StatelessWidget {
             backgroundColor: const Color(0xffa3ec3f).withOpacity(0.7),
             actionTextColor: Colors.white,
           ),
-          dialogTheme: DialogTheme(
-            backgroundColor: const Color(0xff1e2021),
+          dialogTheme: const DialogTheme(
+            backgroundColor: Color(0xff1e2021),
           ),
         ),
       ),

@@ -1,22 +1,25 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
+import 'package:power_lift/data/createUserDto/create_user.dart';
+import 'package:power_lift/data/loginDto/login_dto.dart';
+import 'package:power_lift/data/userDto/user.dart';
+import 'package:power_lift/domain/usecase/createuserusecase/create_user_usecase.dart';
+import 'package:power_lift/domain/usecase/loginusecase/login_use_case.dart';
 import 'package:power_lift/main.dart';
-import 'package:power_lift/models/createUserDto/create_user.dart';
-import 'package:power_lift/models/loginDto/login_dto.dart';
-import 'package:power_lift/models/userDto/user.dart';
-import 'package:power_lift/repository/power_lift_api_impl.dart';
 import 'package:power_lift/utils/errors.dart';
 
 part 'auth_bloc.freezed.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final PowerLiftApiImpl api;
   User? user;
+  final LoginUseCase _loginUseCase;
+  final CreateUserUseCase _createUserUseCase;
 
   final Box storage = Hive.box('appStorage');
 
-  AuthBloc(this.api) : super(const _AppStarted()) {
+  AuthBloc(this._loginUseCase, this._createUserUseCase)
+      : super(const _AppStarted()) {
     on<AuthEvent>(
       (event, emit) async {
         await event.when(
@@ -37,7 +40,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           logIn: (email, password) async {
             try {
               LoginDto loginDto = LoginDto(Username: email, Password: password);
-              final response = await api.login(loginDto);
+              final response = await _loginUseCase.logIn(loginDto);
               storage.put('token', response.access_token);
               storage.put('username', response.user.username);
 
@@ -56,8 +59,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           },
           createUser: (email, password, username, fullName) async {
             try {
-              final result = await api
-                  .createUser(CreateUser(username, password, fullName, email));
+              final result = await _createUserUseCase.createUser(
+                CreateUser(username, password, fullName, email),
+              );
               emit(AuthState.registered(result));
             } on Exception catch (_) {
               emit(const AuthState.error(Errors.couldNotCreateUser));

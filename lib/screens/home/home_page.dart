@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:power_lift/models/exerciseDto/category_dto.dart';
-import 'package:power_lift/models/exerciseDto/exercise_dto.dart';
+import 'package:power_lift/data/exerciseDto/category_dto.dart';
+import 'package:power_lift/data/exerciseDto/exercise_dto.dart';
 import 'package:power_lift/screens/home/state/category_cubit.dart';
 import 'package:power_lift/screens/home/state/exercises_cubit.dart';
 import 'package:power_lift/screens/home/state/tab_controller_cubit.dart';

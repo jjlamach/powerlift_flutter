@@ -1,9 +1,8 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:power_lift/models/userDto/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:power_lift/data/userDto/user.dart';
 
-part 'user_response.g.dart';
 part 'user_response.freezed.dart';
+part 'user_response.g.dart';
 
 @freezed
 class UserResponse with _$UserResponse {

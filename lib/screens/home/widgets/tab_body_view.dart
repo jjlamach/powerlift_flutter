@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:power_lift/models/exerciseDto/category_dto.dart';
-import 'package:power_lift/models/exerciseDto/exercise_dto.dart';
+import 'package:power_lift/data/exerciseDto/category_dto.dart';
+import 'package:power_lift/data/exerciseDto/exercise_dto.dart';
 import 'package:power_lift/utils/app_circular_progress_indicator.dart';
 import 'package:power_lift/utils/common.dart';
 

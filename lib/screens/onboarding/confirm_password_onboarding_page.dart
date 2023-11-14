@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:power_lift/models/onboardinguser/onboarding_user.dart';
+import 'package:power_lift/data/onboardinguser/onboarding_user.dart';
 import 'package:power_lift/screens/onboarding/state/onboarding_cubit.dart';
 import 'package:power_lift/screens/onboarding/state/password_viewer_cubit.dart';
 import 'package:power_lift/utils/common.dart';

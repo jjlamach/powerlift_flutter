@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:power_lift/models/createUserDto/create_user.dart';
-import 'package:power_lift/models/exerciseDto/category_dto.dart';
-import 'package:power_lift/models/exerciseDto/exercise_dto.dart';
-import 'package:power_lift/models/loginDto/login_dto.dart';
-import 'package:power_lift/models/userResponseDto/user_response.dart';
+import 'package:power_lift/data/createUserDto/create_user.dart';
+import 'package:power_lift/data/exerciseDto/category_dto.dart';
+import 'package:power_lift/data/exerciseDto/exercise_dto.dart';
+import 'package:power_lift/data/loginDto/login_dto.dart';
+import 'package:power_lift/data/userResponseDto/user_response.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'power_lift_api.g.dart';

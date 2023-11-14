@@ -1,12 +1,15 @@
 import 'package:bloc/bloc.dart';
-import 'package:power_lift/models/exerciseDto/category_dto.dart';
-import 'package:power_lift/models/exerciseDto/exercise_dto.dart';
-import 'package:power_lift/repository/power_lift_api_impl.dart';
+import 'package:power_lift/data/exerciseDto/category_dto.dart';
+import 'package:power_lift/data/exerciseDto/exercise_dto.dart';
+import 'package:power_lift/domain/usecase/getcategoriesusecase/get_categories_use_case.dart';
+import 'package:power_lift/domain/usecase/getexercisesusecase/getexercisesusecase.dart';
 
 class ExercisesCubit extends Cubit<List<(CategoryDto, ExerciseDto)>> {
-  final PowerLiftApiImpl _repository;
+  final GetExercisesUseCase _getExercisesUseCase;
+  final GetCategoriesUseCase _getCategoriesUseCase;
 
-  ExercisesCubit(this._repository) : super([]);
+  ExercisesCubit(this._getExercisesUseCase, this._getCategoriesUseCase)
+      : super([]);
 
   void getExercise(int exerciseId) async {
     try {
@@ -23,8 +26,8 @@ class ExercisesCubit extends Cubit<List<(CategoryDto, ExerciseDto)>> {
   Future<List<(CategoryDto, ExerciseDto)>> _createWorkouts() async {
     (CategoryDto, ExerciseDto) record;
     List<(CategoryDto, ExerciseDto)> records = [];
-    final categories = await _repository.categories();
-    final exercises = await _repository.exercises();
+    final categories = await _getCategoriesUseCase.getCategories();
+    final exercises = await _getExercisesUseCase.getExercises();
     for (var element in categories) {
       for (var exercise in exercises) {
         if (element.ID == exercise.categoryid?.int32) {

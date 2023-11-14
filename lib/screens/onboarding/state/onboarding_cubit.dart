@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:power_lift/data/onboardinguser/onboarding_user.dart';
 import 'package:power_lift/main.dart';
-import 'package:power_lift/models/onboardinguser/onboarding_user.dart';
 
 class OnboardingCubit extends Cubit<OnboardingUser?> {
   OnboardingUser? user;
