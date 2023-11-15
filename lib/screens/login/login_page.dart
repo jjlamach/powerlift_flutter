@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:power_lift/data/services/app_service.dart';
 import 'package:power_lift/navigation/app_router.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
+import 'package:power_lift/screens/onboarding/state/password_viewer_cubit.dart';
 import 'package:power_lift/utils/common.dart';
 import 'package:power_lift/utils/strings.dart';
 
@@ -20,6 +22,8 @@ class _LoginPageState extends State<LoginPage> {
   late GlobalKey<FormState> _formKey;
   late FocusNode userNameFocusNode = FocusNode();
   late FocusNode passwordFocusNode = FocusNode();
+
+  var hidePassword = true;
 
   @override
   void initState() {
@@ -63,148 +67,144 @@ class _LoginPageState extends State<LoginPage> {
           body: Form(
             key: _formKey,
             child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: _username,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Username field \nrequired";
-                              }
-                              return null;
-                            },
-                            autofocus: true,
-                            focusNode: userNameFocusNode,
-                            onFieldSubmitted: (value) => FocusScope.of(context)
-                                .requestFocus(passwordFocusNode),
-                            cursorColor:
-                                Theme.of(context).colorScheme.secondary,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: Strings.username,
-                              hintStyle: TextStyle(
-                                color: Colors.white.withOpacity(0.8),
-                                fontSize: 30,
-                              ),
-                              fillColor: Colors.transparent,
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 2.0,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
-                              ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 2.0,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
-                              ),
-                              errorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 2.0,
-                                  color: Theme.of(context).colorScheme.error,
-                                ),
-                              ),
-                              focusedErrorBorder: UnderlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                                borderSide: const BorderSide(
-                                  width: 2.0,
-                                  color: Colors.redAccent,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 40.0),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _password,
-                            obscureText: true,
-                            autofillHints: const <String>[
-                              AutofillHints.oneTimeCode
-                            ],
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Password field is \nrequired.";
-                              }
-                              return null;
-                            },
-                            onFieldSubmitted: (value) {
-                              _validateCredentials(context);
-                            },
-                            autofocus: true,
-                            focusNode: passwordFocusNode,
-                            cursorColor:
-                                Theme.of(context).colorScheme.secondary,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: Strings.password,
-                              hintStyle: TextStyle(
-                                color: Colors.white.withOpacity(0.8),
-                                fontSize: 30,
-                              ),
-                              fillColor: Colors.transparent,
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 2.0,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
-                              ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 2.0,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
-                              ),
-                              errorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 2.0,
-                                  color: Theme.of(context).colorScheme.error,
-                                ),
-                              ),
-                              focusedErrorBorder: UnderlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                                borderSide: const BorderSide(
-                                  width: 2.0,
-                                  color: Colors.redAccent,
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
+              child: ListView(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.all(40.0),
+                shrinkWrap: true,
+                children: [
+                  TextFormField(
+                    controller: _username,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Username field required";
+                      }
+                      return null;
+                    },
+                    autofocus: true,
+                    focusNode: userNameFocusNode,
+                    onFieldSubmitted: (value) =>
+                        FocusScope.of(context).requestFocus(passwordFocusNode),
+                    cursorColor: Theme.of(context).colorScheme.secondary,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
                     ),
-                    const SizedBox(height: 40.0),
-                    SizedBox(
-                      width: double.infinity,
-                      child: OutlinedButton(
-                        onPressed: () {
-                          _validateCredentials(context);
-                        },
-                        child: const Text(Strings.logIn),
+                    decoration: InputDecoration(
+                      hintText: Strings.username,
+                      hintStyle: TextStyle(
+                        color: Colors.white.withOpacity(0.8),
+                        fontSize: 30,
+                      ),
+                      fillColor: Colors.transparent,
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2.0,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2.0,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                      errorBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2.0,
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                      ),
+                      focusedErrorBorder: UnderlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: const BorderSide(
+                          width: 2.0,
+                          color: Colors.redAccent,
+                        ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(width: 40.0),
+                  TextFormField(
+                    controller: _password,
+                    obscureText: hidePassword,
+                    autofillHints: const <String>[AutofillHints.oneTimeCode],
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Password field is required";
+                      }
+                      return null;
+                    },
+                    autofocus: true,
+                    focusNode: passwordFocusNode,
+                    cursorColor: Theme.of(context).colorScheme.secondary,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    decoration: InputDecoration(
+                      suffixIcon: hidePassword == true
+                          ? GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  hidePassword = false;
+                                });
+                              },
+                              child: const Icon(Icons.visibility_off),
+                            )
+                          : GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  hidePassword = true;
+                                });
+                              },
+                              child: const Icon(Icons.visibility),
+                            ),
+                      hintText: Strings.password,
+                      hintStyle: TextStyle(
+                        color: Colors.white.withOpacity(0.8),
+                        fontSize: 30,
+                      ),
+                      fillColor: Colors.transparent,
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2.0,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2.0,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                      errorBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2.0,
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                      ),
+                      focusedErrorBorder: UnderlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: const BorderSide(
+                          width: 2.0,
+                          color: Colors.redAccent,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 40.0),
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        _validateCredentials(context);
+                      },
+                      child: const Text(Strings.logIn),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
