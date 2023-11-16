@@ -1,7 +1,7 @@
 class Strings {
-  static const String emailFieldRequired = 'Email field required.';
-  static const String notAvalidEmail = 'Not a valid email.';
-  static const String passwordFieldRequired = 'Password field required.';
+  static const String emailFieldRequired = 'Email field required';
+  static const String notAvalidEmail = 'Not a valid email';
+  static const String passwordFieldRequired = 'Password field required';
   static const String password = 'Password';
   static const String email = 'Email';
   static const String signIn = 'Sign in';
@@ -14,7 +14,7 @@ class Strings {
   static const String confirmPassword = 'Confirm Password';
   static const String fullNameRequired = 'Full name required';
   static const String confirmPasswordIsRequired =
-      'Confirm Password is required.';
+      'Confirm Password is required';
 
   static const String whatIsYourEmail = 'What is your email?';
   static const String whatIsYourPassword = 'What password you want to use?';
@@ -49,4 +49,6 @@ class Strings {
   static const String areYouSureDeleteAccount =
       'Are you sure you want to delete your account?\nAll your data including your workout graphs will be lost.';
   static const String deleteAccountDialog = 'Delete Account';
+  static const String passwordsDoNotMatch = 'Passwords do not match';
+  static const String next = 'Next';
 }
