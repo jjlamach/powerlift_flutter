@@ -78,6 +78,7 @@ class HomePage extends StatelessWidget {
               body:
                   BlocBuilder<ExercisesCubit, List<(CategoryDto, ExerciseDto)>>(
                 builder: (context, _) => TabBarView(
+                  physics: const NeverScrollableScrollPhysics(),
                   children: List.generate(
                     state.length,
                     (index) => TabBodyView(

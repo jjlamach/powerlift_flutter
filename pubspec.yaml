@@ -50,6 +50,7 @@ dependencies:
   hive_flutter: 1.1.0
   auto_route: 7.8.4
   flutter_svg: ^2.0.9
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:
