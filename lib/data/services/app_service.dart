@@ -9,6 +9,7 @@ import 'package:power_lift/domain/usecase/getcategoriesusecase/get_categories_us
 import 'package:power_lift/domain/usecase/getexercisesusecase/getexercisesusecase.dart';
 import 'package:power_lift/domain/usecase/loginusecase/login_use_case.dart';
 import 'package:power_lift/main.dart';
+import 'package:power_lift/navigation/app_router.dart';
 import 'package:power_lift/screens/home/state/category_cubit.dart';
 import 'package:power_lift/screens/home/state/exercises_cubit.dart';
 import 'package:power_lift/screens/home/state/tab_controller_cubit.dart';
@@ -29,6 +30,10 @@ class AppService {
     Dio dio = Dio();
     dio.interceptors.add(TokenInterceptor());
     getIt.registerLazySingleton(() => dio);
+
+    getIt.registerLazySingleton<AppRouter>(() {
+      return AppRouter();
+    });
 
     // Register PowerLiftApi
     getIt.registerLazySingleton<PowerLiftApi>(() {

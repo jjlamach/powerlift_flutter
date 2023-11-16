@@ -8,7 +8,6 @@ import 'package:power_lift/screens/home/state/exercises_cubit.dart';
 import 'package:power_lift/screens/home/state/tab_controller_cubit.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
 import 'package:power_lift/screens/onboarding/state/onboarding_cubit.dart';
-import 'package:power_lift/screens/onboarding/state/password_viewer_cubit.dart';
 import 'package:power_lift/screens/settings/state/delete_user_cubit.dart';
 
 import 'navigation/app_router.dart';
@@ -22,14 +21,13 @@ final kLogger = Logger(
   ),
 );
 
-final _appRouter = AppRouter();
-final _service = AppService();
+final _di = AppService();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (value) async {
-      await _service.setUp().then(
+      await _di.setUp().then(
             (_) => runApp(
               const PowerLiftApp(),
             ),
@@ -69,7 +67,7 @@ class PowerLiftApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp.router(
-        routerConfig: _appRouter.config(),
+        routerConfig: getIt<AppRouter>().config(),
         title: 'PowerLift',
         theme: ThemeData(
           useMaterial3: true,
