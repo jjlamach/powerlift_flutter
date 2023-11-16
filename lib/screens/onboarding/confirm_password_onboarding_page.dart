@@ -57,7 +57,7 @@ class ConfirmPasswordOnboardingPage extends StatelessWidget {
                             return GestureDetector(
                               onTap: () => context
                                   .read<PasswordViewerCubit>()
-                                  .showPassword(true),
+                                  .hidePassword(true),
                               child: Icon(
                                 Icons.remove_red_eye,
                                 color: Theme.of(context).colorScheme.secondary,
@@ -68,7 +68,7 @@ class ConfirmPasswordOnboardingPage extends StatelessWidget {
                             return GestureDetector(
                               onTap: () => context
                                   .read<PasswordViewerCubit>()
-                                  .showPassword(false),
+                                  .hidePassword(false),
                               child: Icon(
                                 Icons.remove_red_eye_outlined,
                                 color: Theme.of(context).colorScheme.secondary,

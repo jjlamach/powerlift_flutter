@@ -1,10 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:power_lift/data/services/app_service.dart';
 import 'package:power_lift/navigation/app_router.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
-import 'package:power_lift/screens/onboarding/state/password_viewer_cubit.dart';
 import 'package:power_lift/utils/common.dart';
 import 'package:power_lift/utils/strings.dart';
 

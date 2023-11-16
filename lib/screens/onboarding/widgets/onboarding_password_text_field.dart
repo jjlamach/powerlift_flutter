@@ -24,25 +24,21 @@ class OnboardingPasswordTextField extends StatelessWidget {
       cursorColor: Theme.of(context).colorScheme.secondary,
       decoration: InputDecoration(
         suffixIcon: BlocBuilder<PasswordViewerCubit, bool>(
-          builder: (context, state) {
-            if (!state) {
+          builder: (context, visible) {
+            if (visible) {
               return GestureDetector(
                 onTap: () =>
-                    context.read<PasswordViewerCubit>().showPassword(true),
-                child: Icon(
-                  Icons.remove_red_eye,
-                  color: Theme.of(context).colorScheme.secondary,
-                  size: Dimen.iconSize,
+                    context.read<PasswordViewerCubit>().hidePassword(false),
+                child: const Icon(
+                  Icons.visibility_off,
                 ),
               );
             } else {
               return GestureDetector(
                 onTap: () =>
-                    context.read<PasswordViewerCubit>().showPassword(false),
-                child: Icon(
-                  Icons.remove_red_eye_outlined,
-                  color: Theme.of(context).colorScheme.secondary,
-                  size: Dimen.iconSize,
+                    context.read<PasswordViewerCubit>().hidePassword(true),
+                child: const Icon(
+                  Icons.visibility,
                 ),
               );
             }

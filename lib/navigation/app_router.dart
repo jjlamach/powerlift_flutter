@@ -79,10 +79,10 @@ class AppRouter extends _$AppRouter {
           path: "/onboarding-password",
           page: PasswordOnboardingRoute.page,
         ),
-        AutoRoute(
-          path: "/onboarding-confirm-password",
-          page: ConfirmPasswordOnboardingRoute.page,
-        ),
+        // AutoRoute(
+        //   path: "/onboarding-confirm-password",
+        //   page: ConfirmPasswordOnboardingRoute.page,
+        // ),
         AutoRoute(
           path: "/onboarding-username",
           page: UsernameOnboardingRoute.page,

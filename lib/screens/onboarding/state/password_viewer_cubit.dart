@@ -2,15 +2,18 @@ import 'package:bloc/bloc.dart';
 import 'package:power_lift/main.dart';
 
 class PasswordViewerCubit extends Cubit<bool> {
-  PasswordViewerCubit() : super(false);
+  PasswordViewerCubit() : super(true); // hide password as default
 
-  void showPassword(bool value) {
+  void hidePassword(bool value) {
     emit(value);
+  }
+
+  void reset() {
+    emit(true);
   }
 
   @override
   void onChange(Change<bool> change) {
-    // TODO: implement onChange
     super.onChange(change);
     kLogger.i('PasswordViewerCubit: $change');
   }

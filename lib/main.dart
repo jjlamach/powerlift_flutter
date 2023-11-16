@@ -65,9 +65,6 @@ class PowerLiftApp extends StatelessWidget {
           create: (context) => getIt<TabControllerCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<PasswordViewerCubit>(),
-        ),
-        BlocProvider(
           create: (context) => getIt<DeleteUserCubit>(),
         ),
       ],

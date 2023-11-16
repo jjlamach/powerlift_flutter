@@ -34,6 +34,11 @@ class OnboardingCubit extends Cubit<OnboardingUser?> {
     emit(user);
   }
 
+  void reset() {
+    user = null;
+    emit(user);
+  }
+
   @override
   void onChange(Change<OnboardingUser?> change) {
     super.onChange(change);

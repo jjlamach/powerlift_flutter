@@ -50,6 +50,7 @@ class FullNameOnboardingPage extends StatelessWidget {
                             AutoRouter.of(context).replaceAll([
                               const GetStartedRoute(),
                             ]);
+                            context.read<OnboardingCubit>().reset();
                             ScaffoldMessenger.of(context).showSnackBar(
                               Common.appSnackBar(
                                   'Could not create account. Contact support.'),

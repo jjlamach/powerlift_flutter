@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../api/power_lift_api.dart';
+part of 'power_lift_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
