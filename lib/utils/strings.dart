@@ -51,4 +51,5 @@ class Strings {
   static const String deleteAccountDialog = 'Delete Account';
   static const String passwordsDoNotMatch = 'Passwords do not match';
   static const String next = 'Next';
+  static const String couldNotDeleteUser = 'Could not delete user.';
 }

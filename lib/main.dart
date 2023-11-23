@@ -3,12 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 import 'package:power_lift/data/services/app_service.dart';
-import 'package:power_lift/screens/home/state/category_cubit.dart';
-import 'package:power_lift/screens/home/state/exercises_cubit.dart';
 import 'package:power_lift/screens/home/state/tab_controller_cubit.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
 import 'package:power_lift/screens/onboarding/state/onboarding_cubit.dart';
-import 'package:power_lift/screens/settings/state/delete_user_cubit.dart';
 
 import 'navigation/app_router.dart';
 
@@ -54,16 +51,7 @@ class PowerLiftApp extends StatelessWidget {
           create: (context) => getIt<OnboardingCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<CategoryCubit>()..getCategories(),
-        ),
-        BlocProvider(
-          create: (context) => getIt<ExercisesCubit>()..getExercise(1),
-        ),
-        BlocProvider(
           create: (context) => getIt<TabControllerCubit>(),
-        ),
-        BlocProvider(
-          create: (context) => getIt<DeleteUserCubit>(),
         ),
       ],
       child: MaterialApp.router(

@@ -17,7 +17,6 @@ import 'package:power_lift/screens/login/state/auth_bloc.dart';
 import 'package:power_lift/screens/login/token_interceptor.dart';
 import 'package:power_lift/screens/onboarding/state/onboarding_cubit.dart';
 import 'package:power_lift/screens/onboarding/state/password_viewer_cubit.dart';
-import 'package:power_lift/screens/settings/state/delete_user_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -61,6 +60,7 @@ class AppService {
       AuthBloc(
         getIt.get(),
         getIt.get(),
+        getIt.get(),
       ),
     );
     getIt.registerFactory(
@@ -80,11 +80,6 @@ class AppService {
     );
     getIt.registerFactory(
       () => PasswordViewerCubit(),
-    );
-    getIt.registerFactory(
-      () => DeleteUserCubit(
-        getIt.get(),
-      ),
     );
   }
 

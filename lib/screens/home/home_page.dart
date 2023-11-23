@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:power_lift/data/exerciseDto/category_dto.dart';
 import 'package:power_lift/data/exerciseDto/exercise_dto.dart';
+import 'package:power_lift/data/services/app_service.dart';
 import 'package:power_lift/screens/home/state/category_cubit.dart';
 import 'package:power_lift/screens/home/state/exercises_cubit.dart';
 import 'package:power_lift/screens/home/state/tab_controller_cubit.dart';
@@ -16,80 +17,92 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: BlocBuilder<CategoryCubit, List<CategoryDto>>(
-        builder: (context, state) {
-          final categories = state.length;
-          if (state.isEmpty) {
-            return const AppCircularProgressIndicator();
-          }
-          return DefaultTabController(
-            length: categories,
-            initialIndex: context.read<TabControllerCubit>().state,
-            child: Scaffold(
-              floatingActionButton: FloatingActionButton(
-                shape: const CircleBorder(),
-                onPressed: () {
-                  // AutoRouter.of(context).push(const AddWorkoutRoute());
-                },
-                child: Icon(
-                  Icons.add,
-                  size: 30,
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
-              ),
-              appBar: AppBar(
-                toolbarHeight: 200,
-                flexibleSpace: const HomePageAppBarView(),
-                bottom: TabBar(
-                  isScrollable: true,
-                  onTap: (value) {
-                    context.read<TabControllerCubit>().currentIndex(value);
-                    context.read<ExercisesCubit>().getExercise(state[value].ID);
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt<CategoryCubit>()..getCategories(),
+        ),
+        BlocProvider(
+          create: (context) => getIt<ExercisesCubit>()..getExercise(1),
+        ),
+      ],
+      child: SafeArea(
+        child: BlocBuilder<CategoryCubit, List<CategoryDto>>(
+          builder: (context, state) {
+            final categories = state.length;
+            if (state.isEmpty) {
+              return const AppCircularProgressIndicator();
+            }
+            return DefaultTabController(
+              length: categories,
+              initialIndex: context.read<TabControllerCubit>().state,
+              child: Scaffold(
+                floatingActionButton: FloatingActionButton(
+                  shape: const CircleBorder(),
+                  onPressed: () {
+                    // AutoRouter.of(context).push(const AddWorkoutRoute());
                   },
-                  overlayColor:
-                      const MaterialStatePropertyAll(Colors.transparent),
-                  dividerColor: Colors.transparent,
-                  padding: const EdgeInsets.only(bottom: 40.0),
-                  tabs: List.generate(
-                    state.length,
-                    (index) {
-                      return BlocBuilder<TabControllerCubit, int>(
-                        builder: (context, tabState) => Container(
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: tabState == index
-                                ? Theme.of(context).colorScheme.secondary
-                                : const Color(0xff191919),
-                            borderRadius: BorderRadius.circular(
-                              20.0,
-                            ),
-                          ),
-                          child: Tab(
-                            text:
-                                '${state[index].Name.substring(0, 1).toUpperCase()}${state[index].Name.substring(1)}',
-                          ),
-                        ),
-                      );
-                    },
+                  child: Icon(
+                    Icons.add,
+                    size: 30,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
-              ),
-              body:
-                  BlocBuilder<ExercisesCubit, List<(CategoryDto, ExerciseDto)>>(
-                builder: (context, _) => TabBarView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: List.generate(
-                    state.length,
-                    (index) => TabBodyView(
-                      workouts: _,
+                appBar: AppBar(
+                  toolbarHeight: 200,
+                  flexibleSpace: const HomePageAppBarView(),
+                  bottom: TabBar(
+                    isScrollable: true,
+                    onTap: (value) {
+                      context.read<TabControllerCubit>().currentIndex(value);
+                      context
+                          .read<ExercisesCubit>()
+                          .getExercise(state[value].ID);
+                    },
+                    overlayColor:
+                        const MaterialStatePropertyAll(Colors.transparent),
+                    dividerColor: Colors.transparent,
+                    padding: const EdgeInsets.only(bottom: 40.0),
+                    tabs: List.generate(
+                      state.length,
+                      (index) {
+                        return BlocBuilder<TabControllerCubit, int>(
+                          builder: (context, tabState) => Container(
+                            width: 100,
+                            decoration: BoxDecoration(
+                              color: tabState == index
+                                  ? Theme.of(context).colorScheme.secondary
+                                  : const Color(0xff191919),
+                              borderRadius: BorderRadius.circular(
+                                20.0,
+                              ),
+                            ),
+                            child: Tab(
+                              text:
+                                  '${state[index].Name.substring(0, 1).toUpperCase()}${state[index].Name.substring(1)}',
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                body: BlocBuilder<ExercisesCubit,
+                    List<(CategoryDto, ExerciseDto)>>(
+                  builder: (context, _) => TabBarView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: List.generate(
+                      state.length,
+                      (index) => TabBodyView(
+                        workouts: _,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

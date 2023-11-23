@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:power_lift/navigation/app_router.dart';
 import 'package:power_lift/screens/login/state/auth_bloc.dart';
-import 'package:power_lift/screens/settings/state/delete_user_cubit.dart';
 import 'package:power_lift/utils/common.dart';
 import 'package:power_lift/utils/strings.dart';
 
@@ -26,18 +25,19 @@ class AppSettingsPage extends StatelessWidget {
             );
           },
         ),
-        BlocListener<DeleteUserCubit, bool>(
+        BlocListener<AuthBloc, AuthState>(
           listener: (context, state) {
-            if (state) {
-              AutoRouter.of(context).replaceAll(
-                [
+            state.whenOrNull(
+              deleted: () {
+                AutoRouter.of(context).replaceAll([
                   const GetStartedRoute(),
-                ],
-              );
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  Common.appSnackBar('Could not delete account.'));
-            }
+                ]);
+              },
+              error: (error) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(Common.appSnackBar(error));
+              },
+            );
           },
         )
       ],
@@ -205,8 +205,9 @@ class AppSettingsPage extends StatelessWidget {
                         ),
                       ),
                       TextButton(
-                        onPressed: () =>
-                            context.read<DeleteUserCubit>().deleteUser(),
+                        onPressed: () => context
+                            .read<AuthBloc>()
+                            .add(const AuthEvent.delete()),
                         child: const Text(Strings.yes),
                       ),
                     ],
